@@ -1,0 +1,52 @@
+global:
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:                           # HTTPS redirection (80 to 443)
+        entryPoint:
+          to: "https"                         # The target element
+          scheme: "https"                     # The redirection target scheme
+  websecure:
+    address: ":443"
+
+providers:
+  docker:
+    endpoint: 'unix:///var/run/docker.sock'
+    watch: true
+    exposedByDefault: false
+    swarmMode: false
+  file:
+    watch: true
+  providersThrottleDuration: "10"
+
+certificatesResolvers:
+  letsEncrypt-staging:
+    acme:
+      email: bradmorg@gmail.com
+      storage: "/etc/traefik/certs/acme.json"
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      keyType: EC256
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+
+  letsEncrypt-production:
+    acme:
+      email: bradmorg@gmail.com
+      storage: "/etc/traefik/certs/acme.json"
+      caServer: 'https://acme-v02.api.letsencrypt.org/directory'
+      keyType: EC256
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"

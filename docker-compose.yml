@@ -1,0 +1,229 @@
+version: '3'
+services:
+  traefik:
+    image: traefik:v2.9
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.traefik.loadbalancer.server.port: "8080"
+      traefik.http.routers.traefik-http.entrypoints: "web"
+      traefik.http.routers.traefik-http.rule: "Host(`traefik.devopsbrad.com`)"
+      traefik.http.routers.traefik-https.entrypoints: "websecure"
+      traefik.http.routers.traefik-https.rule: "Host(`traefik.devopsbrad.com`)"
+      traefik.http.routers.traefik-https.tls: "true"
+      traefik.http.routers.traefik-https.tls.certresolver: "letsEncrypt-production"
+    environment:
+      - CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN
+    #command: --api.insecure=true --providers.docker
+    ports:
+      # Traffic Ports
+      - "80:80"
+      - "443:443"
+      # The Web UI (enabled by --api.insecure=true)
+      #- "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/traefik.yaml:/traefik.yaml:ro
+      - ./traefik/certs/:/etc/traefik/certs
+      - ./traefik/conf/:/etc/traefik/conf
+      #- ./traefik/shared/:/shared
+    networks:
+      - services
+  whoami:
+    # A container that exposes an API to show its IP address. This is for troubleshooting.
+    image: traefik/whoami
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.whoami.loadbalancer.server.port: "80"
+      traefik.http.routers.whoami-http.entrypoints: "web"
+      traefik.http.routers.whoami-http.rule: "Host(`whoami.devopsbrad.com`)"
+      traefik.http.routers.whoami-https.entrypoints: "websecure"
+      traefik.http.routers.whoami-https.rule: "Host(`whoami.devopsbrad.com`)"
+      traefik.http.routers.whoami-https.tls: "true"
+      traefik.http.routers.whoami-https.tls.certresolver: "letsEncrypt-production"
+    networks:
+      - services
+  portainer:
+    image: portainer/portainer
+    restart: unless-stopped
+    environment:
+      - SESSION_TIMEOUT=315360000
+    # command:
+    #   - '--admin-password-file=/run/secrets/portainer-admin-password'
+    #   - '--no-analytics'
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "traefik"
+      traefik.http.services.portainer.loadbalancer.server.port: "9000"
+      traefik.http.routers.portainer-http.entrypoints: "web"
+      traefik.http.routers.portainer-http.rule: "Host(`portainer.devopsbrad.com`)"
+      traefik.http.routers.portainer-https.entrypoints: "websecure"
+      traefik.http.routers.portainer-https.rule: "Host(`portainer.devopsbrad.com`)"
+      traefik.http.routers.portainer-https.tls: "true"
+      traefik.http.routers.portainer-https.tls.certresolver: "letsEncrypt-production"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer_data:/data
+    networks:
+      - services
+  # PiHole DNS Server
+  pihole:
+    image: pihole/pihole:latest
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.pihole.loadbalancer.server.port: "80"
+      traefik.http.routers.pihole-http.entrypoints: "web"
+      traefik.http.routers.pihole-http.rule: "Host(`pihole.devopsbrad.com`)"
+      traefik.http.routers.pihole-https.entrypoints: "websecure"
+      traefik.http.routers.pihole-https.rule: "Host(`pihole.devopsbrad.com`)"
+      traefik.http.routers.pihole-https.tls: "true"
+      traefik.http.routers.pihole-https.tls.certresolver: "letsEncrypt-production"
+    environment:
+      - "TZ=America/New_York"
+      - "WEBPASSWORD=$PIHOLE_PASSWORD"
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "57:57/tcp"
+    volumes:
+      - ./pihole/:/etc/pihole/
+      - ./dns/:/etc/dnsmasq.d/
+    networks:
+      - services
+
+  #Database for Passbolt Password Manager
+  db:
+    image: mariadb:10.3
+    restart: unless-stopped
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      MYSQL_DATABASE: "$PASSBOLT_DB_NAME"
+      MYSQL_USER: "$PASSBOLT_DB_USERNAME"
+      MYSQL_PASSWORD: "$PASSBOLT_DB_PASSWORD"
+    volumes:
+      - passbolt_database_volume:/var/lib/mysql
+    networks:
+      - services
+  #Passbolt Password Manager
+  passbolt:
+    image: passbolt/passbolt:latest-ce
+    restart: unless-stopped
+    depends_on:
+      - db
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.passbolt.loadbalancer.server.port: "80"
+      traefik.http.routers.passbolt-http.entrypoints: "web"
+      traefik.http.routers.passbolt-http.rule: "Host(`passbolt.devopsbrad.com`)"
+      traefik.http.routers.passbolt-https.entrypoints: "websecure"
+      traefik.http.routers.passbolt-https.rule: "Host(`passbolt.devopsbrad.com`)"
+      traefik.http.routers.passbolt-https.tls: "true"
+      traefik.http.routers.passbolt-https.tls.certresolver: "letsEncrypt-production"
+    environment:
+      # The following are required. Specify your own values in the .env file included.
+      # make sure APP_FULL_BASE_URL is resolvable to the passbolt server
+      APP_FULL_BASE_URL: "$APP_FULL_BASE_URL"
+      DATASOURCES_DEFAULT_HOST: "db"
+      DATASOURCES_DEFAULT_USERNAME: "$PASSBOLT_DB_USERNAME"
+      DATASOURCES_DEFAULT_PASSWORD: "$PASSBOLT_DB_PASSWORD"
+      DATASOURCES_DEFAULT_DATABASE: "$PASSBOLT_DB_NAME"
+      EMAIL_TRANSPORT_DEFAULT_HOST: "$EMAIL_TRANSPORT_DEFAULT_HOST"
+      EMAIL_TRANSPORT_DEFAULT_PORT: "$EMAIL_TRANSPORT_DEFAULT_PORT"
+      EMAIL_TRANSPORT_DEFAULT_USERNAME: $EMAIL_TRANSPORT_DEFAULT_USERNAME"
+      # If using google then it must be an applicaiton specific password (Google -> Manage account -> Security > App passwords)
+      EMAIL_TRANSPORT_DEFAULT_PASSWORD: "$EMAIL_TRANSPORT_DEFAULT_PASSWORD"
+      EMAIL_TRANSPORT_DEFAULT_TLS: "$EMAIL_TRANSPORT_DEFAULT_TLS"
+      EMAIL_DEFAULT_FROM: "$EMAIL_DEFAULT_FROM"
+    volumes:
+      - gpg_volume:/etc/passbolt/gpg
+      - jwt_volume:/etc/passbolt/jwt
+    command: ["/usr/bin/wait-for.sh", "-t", "0", "db:3306", "--", "/docker-entrypoint.sh"]
+    networks:
+      - services
+  # Jenkins Master  
+  jenkins-blueocean:
+    image: devopsjourney1/myjenkins-blueocean:2.375.3-1
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "traefik"
+      traefik.http.services.jenkins.loadbalancer.server.port: "8080"
+      traefik.http.routers.jenkins-http.entrypoints: "web"
+      traefik.http.routers.jenkins-http.rule: "Host(`jenkins.devopsbrad.com`)"
+      traefik.http.routers.jenkins-https.entrypoints: "websecure"
+      traefik.http.routers.jenkins-https.rule: "Host(`jenkins.devopsbrad.com`)"
+      traefik.http.routers.jenkins-https.tls: "true"
+      traefik.http.routers.jenkins-https.tls.certresolver: "letsEncrypt-production"
+    volumes:
+    - jenkins-data:/var/jenkins_home
+    - jenkins-docker-certs:/certs/client:ro
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: "1"
+    networks:
+      - services
+  prometheus:
+    image: prom/prometheus:v2.24.0
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.prometheus.loadbalancer.server.port: "9090"
+      traefik.http.routers.prometheus-http.entrypoints: "web"
+      traefik.http.routers.prometheus-http.rule: "Host(`prometheus.devopsbrad.com`)"
+      traefik.http.routers.prometheus-https.entrypoints: "websecure"
+      traefik.http.routers.prometheus-https.rule: "Host(`prometheus.devopsbrad.com`)"
+      traefik.http.routers.prometheus-https.tls: "true"
+      traefik.http.routers.prometheus-https.tls.certresolver: "letsEncrypt-production"
+    volumes:
+      - prometheus-storage:/prometheus
+    networks:
+      - services
+  grafana:
+    image: grafana/grafana:7.3.0
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.grafana.loadbalancer.server.port: "3000"
+      traefik.http.routers.grafana-http.entrypoints: "web"
+      traefik.http.routers.grafana-http.rule: "Host(`grafana.devopsbrad.com`)"
+      traefik.http.routers.grafana-https.entrypoints: "websecure"
+      traefik.http.routers.grafana-https.rule: "Host(`grafana.devopsbrad.com`)"
+      traefik.http.routers.grafana-https.tls: "true"
+      traefik.http.routers.grafana-https.tls.certresolver: "letsEncrypt-production"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=$GF_SECURITY_ADMIN_USER
+      - GF_SECURITY_ADMIN_PASSWORD=$GF_SECURITY_ADMIN_PASSWORD
+    networks:
+      - services
+  cloudflare-tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token $CLOUDFLARE_TUNNEL_TOKEN
+    networks:
+      - services
+
+# Docker Volumes
+volumes:
+  jenkins-data:
+  jenkins-docker-certs:
+  grafana-storage:
+  prometheus-storage:
+  portainer_data:
+  passbolt_database_volume:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   device: /volume1/homelab/docker-volumes
+  gpg_volume:
+  jwt_volume:
+
+# Docker Networks
+networks:
+  services:
+
