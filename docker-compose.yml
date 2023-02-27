@@ -18,13 +18,13 @@ services:
       - "--log.level=DEBUG"
     environment:
       - CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN
-    # ports:
-    #   # Traffic Ports
-    #   - "8081:80"
-    #   - "8443:443"
-    #   - "9001:9001"
-    #   # The Web UI
-    #   #- "8080:8080"
+    ports:
+      # Traffic Ports
+      - "8000:8000"
+      - "8443:8443"
+      - "9001:9001"
+      # The Web UI
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.yaml:/traefik.yaml:ro
@@ -32,9 +32,7 @@ services:
       - ./traefik/conf/:/etc/traefik/conf
       - ./traefik/logs/:/traefik/logs/
     networks:
-      homelab_bridge:
-          ipv4_address: 192.168.0.184
-      #- services
+      - services
   tailscale:
     container_name: tailscaled
     hostname: tailscaled
@@ -79,9 +77,9 @@ services:
       traefik.enable: "true"
       traefik.http.services.pihole.loadbalancer.server.port: "80"
       traefik.http.routers.pihole-http.entrypoints: "web"
-      traefik.http.routers.pihole-http.rule: "Host(`pi.hole`)"
+      traefik.http.routers.pihole-http.rule: "Host(`pihole.devopsbrad.com`)"
       traefik.http.routers.pihole-https.entrypoints: "websecure"
-      traefik.http.routers.pihole-https.rule: "Host(`pi.hole`)"
+      traefik.http.routers.pihole-https.rule: "Host(`pihole.devopsbrad.com`)"
       traefik.http.routers.pihole-https.tls: "true"
       traefik.http.routers.pihole-https.tls.certresolver: "letsEncrypt-production"
     environment:
@@ -122,9 +120,9 @@ services:
       traefik.enable: "true"
       traefik.http.services.passbolt.loadbalancer.server.port: "80"
       traefik.http.routers.passbolt-http.entrypoints: "web"
-      traefik.http.routers.passbolt-http.rule: "Host(`passbolt.devopsbrad.com`)"
+      traefik.http.routers.passbolt-http.rule: "Host(`pass.devopsbrad.com`)"
       traefik.http.routers.passbolt-https.entrypoints: "websecure"
-      traefik.http.routers.passbolt-https.rule: "Host(`passbolt.devopsbrad.com`)"
+      traefik.http.routers.passbolt-https.rule: "Host(`pass.devopsbrad.com`)"
       traefik.http.routers.passbolt-https.tls: "true"
       traefik.http.routers.passbolt-https.tls.certresolver: "letsEncrypt-production"
     environment:
@@ -234,8 +232,3 @@ volumes:
 # Docker Networks
 networks:
   services:
-  homelab_bridge:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.0.0/24

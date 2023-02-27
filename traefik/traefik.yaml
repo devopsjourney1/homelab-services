@@ -20,7 +20,7 @@ metrics:
 
 entryPoints:
   web:
-    address: ":80"
+    address: ":8000"
     http:
       redirections:                           # HTTPS redirection (80 to 443)
         entryPoint:
@@ -28,7 +28,7 @@ entryPoints:
           scheme: "https"                        # The redirection target scheme
           permanent: true
   websecure:
-    address: ":443"
+    address: ":8443"
   metrics:
     address: ":9091"
 
