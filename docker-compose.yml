@@ -20,8 +20,8 @@ services:
       - CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN
     ports:
       # Traffic Ports
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      - "8443:443"
       - "9001:9001"
       # The Web UI
       #- "8080:8080"
