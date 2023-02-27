@@ -5,16 +5,32 @@ api:
   dashboard: true
   insecure: true
 
+log:
+  level: DEBUG
+  filePath: /traefik/logs/traefik.log
+
+accessLog:
+  filePath: /traefik/logs/traefik-access.log
+
+metrics:
+  prometheus:
+    addEntryPointsLabels: true
+    addServicesLabels: true
+    entryPoint: metrics
+
 entryPoints:
   web:
     address: ":80"
     http:
       redirections:                           # HTTPS redirection (80 to 443)
         entryPoint:
-          to: "https"                         # The target element
-          scheme: "https"                     # The redirection target scheme
+          to: "websecure"                         # The target element
+          scheme: "https"                        # The redirection target scheme
+          permanent: true
   websecure:
     address: ":443"
+  metrics:
+    address: ":9091"
 
 providers:
   docker:
@@ -23,6 +39,7 @@ providers:
     exposedByDefault: false
     swarmMode: false
   file:
+    directory: "/etc/traefik/conf"
     watch: true
   providersThrottleDuration: "10"
 

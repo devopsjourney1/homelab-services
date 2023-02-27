@@ -1,0 +1,15 @@
+http:
+  routers:
+    router:
+      rule: "Host(`router.devopsbrad.com`)"
+      service: router-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsEncrypt-production
+
+  services:
+    router-service:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.0.1"

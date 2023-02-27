@@ -2,6 +2,7 @@ version: '3'
 services:
   traefik:
     image: traefik:v2.9
+    hostname: traefik
     restart: unless-stopped
     labels:
       traefik.enable: "true"
@@ -12,46 +13,45 @@ services:
       traefik.http.routers.traefik-https.rule: "Host(`traefik.devopsbrad.com`)"
       traefik.http.routers.traefik-https.tls: "true"
       traefik.http.routers.traefik-https.tls.certresolver: "letsEncrypt-production"
+    command:
+      - "--providers.file.filename=/etc/traefik/conf/synology.yml"
+      - "--log.level=DEBUG"
     environment:
       - CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN
-    #command: --api.insecure=true --providers.docker
     ports:
       # Traffic Ports
       - "80:80"
       - "443:443"
-      # The Web UI (enabled by --api.insecure=true)
+      - "9001:9001"
+      # The Web UI
       #- "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.yaml:/traefik.yaml:ro
       - ./traefik/certs/:/etc/traefik/certs
       - ./traefik/conf/:/etc/traefik/conf
-      #- ./traefik/shared/:/shared
+      - ./traefik/logs/:/traefik/logs/
     networks:
       - services
-  whoami:
-    # A container that exposes an API to show its IP address. This is for troubleshooting.
-    image: traefik/whoami
+  tailscale:
+    container_name: tailscaled
+    hostname: tailscaled
+    volumes:
+        - ./tailscale/:/var/lib/tailscale
+        - /dev/net/tun:/dev/net/tun
+    network_mode: host
+    environment:
+        - TS_ROUTES=192.168.0.0/24
+        - TS_STATE=/var/lib/tailscale/tailscaled.state
+        - TS_STATE_DIR=/var/lib/tailscale/
+    image: tailscale/tailscale:stable
     restart: unless-stopped
-    labels:
-      traefik.enable: "true"
-      traefik.http.services.whoami.loadbalancer.server.port: "80"
-      traefik.http.routers.whoami-http.entrypoints: "web"
-      traefik.http.routers.whoami-http.rule: "Host(`whoami.devopsbrad.com`)"
-      traefik.http.routers.whoami-https.entrypoints: "websecure"
-      traefik.http.routers.whoami-https.rule: "Host(`whoami.devopsbrad.com`)"
-      traefik.http.routers.whoami-https.tls: "true"
-      traefik.http.routers.whoami-https.tls.certresolver: "letsEncrypt-production"
-    networks:
-      - services
   portainer:
     image: portainer/portainer
+    hostname: portainer
     restart: unless-stopped
     environment:
       - SESSION_TIMEOUT=315360000
-    # command:
-    #   - '--admin-password-file=/run/secrets/portainer-admin-password'
-    #   - '--no-analytics'
     labels:
       traefik.enable: "true"
       traefik.docker.network: "traefik"
@@ -71,6 +71,7 @@ services:
   # PiHole DNS Server
   pihole:
     image: pihole/pihole:latest
+    hostname: pihole
     restart: unless-stopped
     labels:
       traefik.enable: "true"
@@ -87,13 +88,10 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "57:57/tcp"
     volumes:
-      - ./pihole/:/etc/pihole/
       - ./dns/:/etc/dnsmasq.d/
     networks:
       - services
-
   #Database for Passbolt Password Manager
   db:
     image: mariadb:10.3
@@ -110,6 +108,7 @@ services:
   #Passbolt Password Manager
   passbolt:
     image: passbolt/passbolt:latest-ce
+    hostname: passbolt
     restart: unless-stopped
     depends_on:
       - db
@@ -144,8 +143,9 @@ services:
     networks:
       - services
   # Jenkins Master  
-  jenkins-blueocean:
+  jenkins:
     image: devopsjourney1/myjenkins-blueocean:2.375.3-1
+    hostname: jenkins
     restart: unless-stopped
     labels:
       traefik.enable: "true"
@@ -168,14 +168,15 @@ services:
       - services
   prometheus:
     image: prom/prometheus:v2.24.0
+    hostname: prometheus
     restart: unless-stopped
     labels:
       traefik.enable: "true"
       traefik.http.services.prometheus.loadbalancer.server.port: "9090"
       traefik.http.routers.prometheus-http.entrypoints: "web"
-      traefik.http.routers.prometheus-http.rule: "Host(`prometheus.devopsbrad.com`)"
+      traefik.http.routers.prometheus-http.rule: "Host(`prom.devopsbrad.com`)"
       traefik.http.routers.prometheus-https.entrypoints: "websecure"
-      traefik.http.routers.prometheus-https.rule: "Host(`prometheus.devopsbrad.com`)"
+      traefik.http.routers.prometheus-https.rule: "Host(`prom.devopsbrad.com`)"
       traefik.http.routers.prometheus-https.tls: "true"
       traefik.http.routers.prometheus-https.tls.certresolver: "letsEncrypt-production"
     volumes:
@@ -184,6 +185,7 @@ services:
       - services
   grafana:
     image: grafana/grafana:7.3.0
+    hostname: grafana
     restart: unless-stopped
     labels:
       traefik.enable: "true"
@@ -203,6 +205,7 @@ services:
       - services
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
+    hostname: cloudflared
     restart: unless-stopped
     command: tunnel --no-autoupdate run --token $CLOUDFLARE_TUNNEL_TOKEN
     networks:
@@ -226,4 +229,12 @@ volumes:
 # Docker Networks
 networks:
   services:
-
+    external: true
+  # macvlan:
+  #   driver: macvlan
+  #   driver_opts:
+  #     parent: eth0
+  #   ipam:
+  #     driver: default
+  #     config:
+  #       - subnet: 192.168.0/22
