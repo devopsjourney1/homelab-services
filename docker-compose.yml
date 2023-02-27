@@ -32,7 +32,8 @@ services:
       - ./traefik/conf/:/etc/traefik/conf
       - ./traefik/logs/:/traefik/logs/
     networks:
-      - services
+      home:
+        ipv4_address: 192.168.0.186
   tailscale:
     container_name: tailscaled
     hostname: tailscaled
@@ -87,15 +88,16 @@ services:
       - "TZ=America/New_York"
       - "WEBPASSWORD=$PIHOLE_PASSWORD"
     ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "8888:80"
+      - 53/tcp
+      - 53/udp
+      - 80
     volumes:
       - './hostnames.dns:/etc/pihole/custom.list'
       - 'pihole-config:/etc/pihole'
       - 'pihole-dns:/etc/dnsmasq.d'
     networks:
-      - services
+      home:
+        ipv4_address: 192.168.0.185
   #Database for Passbolt Password Manager
   db:
     image: mariadb:10.3
@@ -232,3 +234,12 @@ volumes:
 # Docker Networks
 networks:
   services:
+  home:
+    driver: macvlan
+    driver_opts:
+      parent: ovs_bond0
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24
+          gateway: 192.168.0.1
+          ip_range: 192.168.0.0/24
