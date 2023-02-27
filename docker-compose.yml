@@ -20,11 +20,14 @@ services:
       - CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN
     ports:
       # Traffic Ports
-      - "8000:8000"
-      - "8443:8443"
-      - "9001:9001"
-      # The Web UI
-      - "8080:8080"
+      - "80"
+      - "443"
+      - "8080"
+      # - "8000:8000"
+      # - "8443:8443"
+      # - "9001:9001"
+      # # The Web UI
+      # - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.yaml:/traefik.yaml:ro

@@ -4,6 +4,9 @@ acme.json
 dns/*.conf
 *.log
 
+# DNS records so I dont push test records
+hostnames.dns
+
 # Ignore everything in this directory
 pihole/*
 # Except for a file named "custom.list"
