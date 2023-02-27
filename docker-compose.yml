@@ -18,13 +18,13 @@ services:
       - "--log.level=DEBUG"
     environment:
       - CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN
-    ports:
-      # Traffic Ports
-      - "8080:80"
-      - "8443:443"
-      - "9001:9001"
-      # The Web UI
-      #- "8080:8080"
+    # ports:
+    #   # Traffic Ports
+    #   - "8081:80"
+    #   - "8443:443"
+    #   - "9001:9001"
+    #   # The Web UI
+    #   #- "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.yaml:/traefik.yaml:ro
@@ -32,7 +32,9 @@ services:
       - ./traefik/conf/:/etc/traefik/conf
       - ./traefik/logs/:/traefik/logs/
     networks:
-      - services
+      homelab_bridge:
+          ipv4_address: 192.168.0.184
+      #- services
   tailscale:
     container_name: tailscaled
     hostname: tailscaled
@@ -232,11 +234,8 @@ volumes:
 # Docker Networks
 networks:
   services:
-  # macvlan:
-  #   driver: macvlan
-  #   driver_opts:
-  #     parent: eth0
-  #   ipam:
-  #     driver: default
-  #     config:
-  #       - subnet: 192.168.0/22
+  homelab_bridge:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24
