@@ -1,4 +1,4 @@
-192.168.0.172 pihole.devopsbrad.com
+192.168.0.172 pi.hole
 192.168.0.172 traefik.devopsbrad.com
 192.168.0.172 jenkins.devopsbrad.com
 192.168.0.172 portainer.devopsbrad.com
