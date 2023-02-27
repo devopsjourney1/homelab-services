@@ -86,10 +86,11 @@ services:
       - "TZ=America/New_York"
       - "WEBPASSWORD=$PIHOLE_PASSWORD"
     ports:
-      - "53:53/tcp"
-      - "53:53/udp"
+      - "53:53"
+      - "8888:80"
     volumes:
       - ./dns/:/etc/dnsmasq.d/
+      - ./pihole:/etc/pihole/
     networks:
       - services
   #Database for Passbolt Password Manager
