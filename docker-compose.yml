@@ -229,7 +229,6 @@ volumes:
 # Docker Networks
 networks:
   services:
-    external: true
   # macvlan:
   #   driver: macvlan
   #   driver_opts:
