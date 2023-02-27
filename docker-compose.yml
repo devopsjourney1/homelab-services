@@ -37,7 +37,7 @@ services:
     container_name: tailscaled
     hostname: tailscaled
     volumes:
-        - ./tailscale/:/var/lib/tailscale
+        - tailscale:/var/lib/tailscale
         - /dev/net/tun:/dev/net/tun
     network_mode: host
     environment:
@@ -90,8 +90,9 @@ services:
       - "53:53/udp"
       - "8888:80"
     volumes:
-      - ./dns/:/etc/dnsmasq.d/
-      - ./pihole:/etc/pihole/
+      - './hostnames.dns:/etc/pihole/custom.list'
+      - 'pihole-config:/etc/pihole'
+      - 'pihole-dns:/etc/dnsmasq.d'
     networks:
       - services
   #Database for Passbolt Password Manager
@@ -215,16 +216,15 @@ services:
 
 # Docker Volumes
 volumes:
+  tailscale:
   jenkins-data:
+  pihole-config:
+  pihole-dns:
   jenkins-docker-certs:
   grafana-storage:
   prometheus-storage:
   portainer_data:
   passbolt_database_volume:
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   device: /volume1/homelab/docker-volumes
   gpg_volume:
   jwt_volume:
 
