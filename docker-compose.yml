@@ -13,21 +13,13 @@ services:
       traefik.http.routers.traefik-https.rule: "Host(`traefik.devopsbrad.com`)"
       traefik.http.routers.traefik-https.tls: "true"
       traefik.http.routers.traefik-https.tls.certresolver: "letsEncrypt-production"
-    command:
-      - "--providers.file.filename=/etc/traefik/conf/synology.yml"
-      - "--log.level=DEBUG"
     environment:
       - CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN
     ports:
       # Traffic Ports
-      - "80"
-      - "443"
-      - "8080"
-      # - "8000:8000"
-      # - "8443:8443"
-      # - "9001:9001"
-      # # The Web UI
-      # - "8080:8080"
+      - "192.168.0.186:80:80"
+      - "192.168.0.186:443:443"
+      - "192.168.0.186:8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.yaml:/traefik.yaml:ro
@@ -35,6 +27,7 @@ services:
       - ./traefik/conf/:/etc/traefik/conf
       - ./traefik/logs/:/traefik/logs/
     networks:
+      services:
       home:
         ipv4_address: 192.168.0.186
   tailscale:
@@ -91,14 +84,14 @@ services:
       - "TZ=America/New_York"
       - "WEBPASSWORD=$PIHOLE_PASSWORD"
     ports:
-      - 53/tcp
-      - 53/udp
-      - 80
+      - "192.168.0.185:53:53/tcp"
+      - "192.168.0.185:53:53/udp"
     volumes:
       - './hostnames.dns:/etc/pihole/custom.list'
       - 'pihole-config:/etc/pihole'
       - 'pihole-dns:/etc/dnsmasq.d'
     networks:
+      services:
       home:
         ipv4_address: 192.168.0.185
   #Database for Passbolt Password Manager
