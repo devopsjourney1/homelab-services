@@ -30,19 +30,7 @@ services:
       services:
       home:
         ipv4_address: 192.168.0.186
-  tailscale:
-    container_name: tailscaled
-    hostname: tailscaled
-    volumes:
-        - tailscale:/var/lib/tailscale
-        - /dev/net/tun:/dev/net/tun
-    network_mode: host
-    environment:
-        - TS_ROUTES=192.168.0.0/24
-        - TS_STATE=/var/lib/tailscale/tailscaled.state
-        - TS_STATE_DIR=/var/lib/tailscale/
-    image: tailscale/tailscale:stable
-    restart: unless-stopped
+  # Portainer Docker Management
   portainer:
     image: portainer/portainer
     hostname: portainer
@@ -215,7 +203,6 @@ services:
 
 # Docker Volumes
 volumes:
-  tailscale:
   jenkins-data:
   pihole-config:
   pihole-dns:

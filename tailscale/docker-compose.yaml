@@ -1,0 +1,18 @@
+version: '3'
+services:
+  tailscale:
+    container_name: tailscaled
+    hostname: tailscale-ubuntu-vm
+    volumes:
+        - tailscale:/var/lib/tailscale
+        - /dev/net/tun:/dev/net/tun
+    network_mode: host
+    environment:
+        - TS_ROUTES=192.168.0.0/24
+        - TS_STATE=/var/lib/tailscale/tailscaled.state
+        - TS_STATE_DIR=/var/lib/tailscale/
+    image: tailscale/tailscale:stable
+    restart: unless-stopped
+
+volumes:
+  tailscale:
