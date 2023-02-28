@@ -80,7 +80,7 @@ services:
       traefik.http.routers.pihole-https.tls: "true"
       traefik.http.routers.pihole-https.tls.certresolver: "letsEncrypt-production"
     environment:
-      - "FTLCONF_REPLY_ADDR4=$DOCKER_HOST_IP"
+      - "FTLCONF_REPLY_ADDR4=192.168.0.185"
       - "TZ=America/New_York"
       - "WEBPASSWORD=$PIHOLE_PASSWORD"
     ports:
