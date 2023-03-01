@@ -17,9 +17,9 @@ services:
       - CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN
     ports:
       # Traffic Ports
-      - "192.168.0.186:80:80"
-      - "192.168.0.186:443:443"
-      - "192.168.0.186:8080:8080"
+      - "$TRAEFIK_IP:80:80"
+      - "$TRAEFIK_IP:443:443"
+      - "$TRAEFIK_IP:8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.yaml:/traefik.yaml:ro
@@ -29,7 +29,7 @@ services:
     networks:
       services:
       home:
-        ipv4_address: 192.168.0.186
+        ipv4_address: $TRAEFIK_IP
   # Portainer Docker Management
   portainer:
     image: portainer/portainer
@@ -68,12 +68,12 @@ services:
       traefik.http.routers.pihole-https.tls: "true"
       traefik.http.routers.pihole-https.tls.certresolver: "letsEncrypt-production"
     environment:
-      - "FTLCONF_REPLY_ADDR4=192.168.0.185"
+      - "FTLCONF_REPLY_ADDR4=$PIHOLE_IP"
       - "TZ=America/New_York"
       - "WEBPASSWORD=$PIHOLE_PASSWORD"
     ports:
-      - "192.168.0.185:53:53/tcp"
-      - "192.168.0.185:53:53/udp"
+      - "$PIHOLE_IP:53:53/tcp"
+      - "$PIHOLE_IP:53:53/udp"
     volumes:
       - './hostnames.dns:/etc/pihole/custom.list'
       - 'pihole-config:/etc/pihole'
@@ -81,7 +81,7 @@ services:
     networks:
       services:
       home:
-        ipv4_address: 192.168.0.185
+        ipv4_address: $PIHOLE_IP
   #Database for Passbolt Password Manager
   db:
     image: mariadb:10.3
@@ -203,16 +203,66 @@ services:
 
 # Docker Volumes
 volumes:
-  jenkins-data:
   pihole-config:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/pihole/config'
   pihole-dns:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/pihole/dns'
+  jenkins-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/jenkins/data'
   jenkins-docker-certs:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/jenkins/certs'
   grafana-storage:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/grafana'
   prometheus-storage:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/prometheus'
   portainer_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/portainer'
   passbolt_database_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/passbolt/db'
   gpg_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/passbolt/gpg'
   jwt_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/passbolt/gpg'
 
 # Docker Networks
 networks:
@@ -220,9 +270,9 @@ networks:
   home:
     driver: macvlan
     driver_opts:
-      parent: ovs_bond0
+      parent: $PARENT_INTERFACE
     ipam:
       config:
-        - subnet: 192.168.0.0/24
-          gateway: 192.168.0.1
-          ip_range: 192.168.0.0/24
+        - subnet: $SUBNET
+          gateway: $GATEWAY
+          ip_range: $IP_RANGE

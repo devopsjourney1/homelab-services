@@ -4,6 +4,9 @@ acme.json
 dns/*.conf
 *.log
 
+# if any volumes, ignore them
+volumes/*
+
 # DNS records so I dont push test records
 hostnames.dns
 
