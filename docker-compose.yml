@@ -262,7 +262,7 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '$VOLUME_PATH/passbolt/gpg'
+      device: '$VOLUME_PATH/passbolt/jwt'
 
 # Docker Networks
 networks:
