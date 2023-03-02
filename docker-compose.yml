@@ -236,7 +236,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 32M
+          memory: 48M
 
 # Docker Volumes
 volumes:
