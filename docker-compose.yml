@@ -30,6 +30,10 @@ services:
       services:
       home:
         ipv4_address: $TRAEFIK_IP
+    deploy:
+      resources:
+        limits:
+          memory: 64M
   # Portainer Docker Management
   portainer:
     image: portainer/portainer
@@ -53,6 +57,10 @@ services:
       - portainer_data:/data
     networks:
       - services
+    deploy:
+      resources:
+        limits:
+          memory: 64M
   # PiHole DNS Server
   pihole:
     image: pihole/pihole:latest
@@ -83,6 +91,10 @@ services:
       services:
       home:
         ipv4_address: $PIHOLE_IP
+    deploy:
+      resources:
+        limits:
+          memory: 256M
   #Database for Passbolt Password Manager
   db:
     image: mariadb:10.3
@@ -96,6 +108,10 @@ services:
       - passbolt_database_volume:/var/lib/mysql
     networks:
       - services
+    deploy:
+      resources:
+        limits:
+          memory: 256M
   #Passbolt Password Manager
   passbolt:
     image: passbolt/passbolt:latest-ce
@@ -133,6 +149,10 @@ services:
     command: ["/usr/bin/wait-for.sh", "-t", "0", "db:3306", "--", "/docker-entrypoint.sh"]
     networks:
       - services
+    deploy:
+      resources:
+        limits:
+          memory: 256M
   # Jenkins Master  
   jenkins:
     image: devopsjourney1/myjenkins-blueocean:2.375.3-1
@@ -157,6 +177,10 @@ services:
       DOCKER_TLS_VERIFY: "1"
     networks:
       - services
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
   prometheus:
     image: prom/prometheus:v2.24.0
     hostname: prometheus
@@ -174,6 +198,10 @@ services:
       - prometheus-storage:/prometheus
     networks:
       - services
+    deploy:
+      resources:
+        limits:
+          memory: 64M
   grafana:
     image: grafana/grafana:7.3.0
     hostname: grafana
@@ -194,6 +222,10 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=$GF_SECURITY_ADMIN_PASSWORD
     networks:
       - services
+    deploy:
+      resources:
+        limits:
+          memory: 64M
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     hostname: cloudflared
@@ -201,6 +233,10 @@ services:
     command: tunnel --no-autoupdate run --token $CLOUDFLARE_TUNNEL_TOKEN
     networks:
       - services
+    deploy:
+      resources:
+        limits:
+          memory: 32M
 
 # Docker Volumes
 volumes:
