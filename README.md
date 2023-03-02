@@ -30,3 +30,9 @@ go-passbolt-cli configure --serverAddress https://passbolt.devopsbrad.com --user
 go-passbolt-cli create resource --name "Test Resource" --password "Strong Password"
 go-passbolt-cli list resource
 go-passbolt-cli get resource --id <ResourceID>
+
+
+# Restoring from a Snapshot:
+```
+sudo cp -rp /volume2/share2-SSD/#snapshot/GMT-08-2023.03.01-07.00.01/homelab/docker/volumes/* .
+```

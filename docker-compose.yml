@@ -74,6 +74,7 @@ services:
     ports:
       - "$PIHOLE_IP:53:53/tcp"
       - "$PIHOLE_IP:53:53/udp"
+      - "$PIHOLE_IP:80:80"
     volumes:
       - './hostnames.dns:/etc/pihole/custom.list'
       - 'pihole-config:/etc/pihole'
