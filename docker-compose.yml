@@ -94,7 +94,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 512M
   #Database for Passbolt Password Manager
   db:
     image: mariadb:10.3
@@ -111,7 +111,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 512M
   #Passbolt Password Manager
   passbolt:
     image: passbolt/passbolt:latest-ce
@@ -152,7 +152,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 512M
   # Jenkins Master  
   jenkins:
     image: devopsjourney1/myjenkins-blueocean:2.375.3-1
