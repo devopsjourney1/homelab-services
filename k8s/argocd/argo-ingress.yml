@@ -22,3 +22,27 @@ spec:
   - hosts:
     - argocd.devopsbrad.com
     secretName: argocd-secret # do not change, this is provided by Argo CD
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-grpc-ingress
+  namespace: argocd
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-argo-cd-argocd-server
+            port:
+              name: https
+    host: grpc.argocd.devopsbrad.com
+  tls:
+  - hosts:
+    - grpc.argocd.devopsbrad.com
+    secretName: argocd-secret # do not change, this is provided by Argo CD
