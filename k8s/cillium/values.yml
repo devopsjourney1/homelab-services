@@ -1,0 +1,4 @@
+global:
+  kubeProxyReplacement: strict
+  masquerade: false
+  tunnel: disabled

@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: cilium
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: https://github.com/devopsjourney1/homelab-services.git
+    path: k8s/cilium
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
+      releaseName: cilium
+      chart: cilium/cilium
+      verify: true
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
