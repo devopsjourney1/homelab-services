@@ -43,6 +43,9 @@ providers:
     watch: true
   providersThrottleDuration: "10"
 
+serversTransport:
+  insecureSkipVerify: true
+
 certificatesResolvers:
   letsEncrypt-staging:
     acme:

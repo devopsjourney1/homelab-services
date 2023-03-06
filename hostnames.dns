@@ -1,10 +1,11 @@
-192.168.0.23 pihole.devopsbrad.com
-192.168.0.22 traefik.devopsbrad.com
-192.168.0.22 jenkins.devopsbrad.com
-192.168.0.22 portainer.devopsbrad.com
-192.168.0.22 grafana.devopsbrad.com
-192.168.0.22 prom.devopsbrad.com
-192.168.0.22 pass.devopsbrad.com
-192.168.0.22 nas.devopsbrad.com
-192.168.0.22 router.devopsbrad.com
-
+192.168.0.185 pi.hole
+192.168.0.186 proxmox.devopsbrad.com
+192.168.0.186 pihole.devopsbrad.com
+192.168.0.186 traefik.devopsbrad.com
+192.168.0.186 jenkins.devopsbrad.com
+192.168.0.186 portainer.devopsbrad.com
+192.168.0.186 grafana.devopsbrad.com
+192.168.0.186 prom.devopsbrad.com
+192.168.0.186 pass.devopsbrad.com
+192.168.0.172 nas.devopsbrad.com
+192.168.0.186 router.devopsbrad.com

@@ -1,6 +1,6 @@
 http:
   routers:
-    router:
+    proxmox-router:
       rule: "Host(`proxmox.devopsbrad.com`)"
       service: proxmox-service
       entryPoints:
@@ -9,7 +9,7 @@ http:
         certResolver: letsEncrypt-production
 
   services:
-    router-service:
+    proxmox-service:
       loadBalancer:
         servers:
-          - url: "http://192.168.0.100:8006"
+          - url: "https://192.168.0.100:8006"
