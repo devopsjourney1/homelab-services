@@ -7,20 +7,17 @@ spec:
   destination:
     name: ''
     namespace: cilium
-    createNamespace: true
     server: 'https://kubernetes.default.svc'
   source:
-    repoURL: https://github.com/devopsjourney1/homelab-services.git
-    path: k8s/cilium
+    repoURL: https://github.com/cilium/cilium.git
+    path: install/kubernetes/cilium
     targetRevision: HEAD
     helm:
-      valueFiles:
-        - values.yaml
       releaseName: cilium
-      chart: cilium/cilium
-      verify: true
   project: default
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
