@@ -1,5 +1,6 @@
 # About my Homelab Setup
 
+<img src="homelab.drawio.png" alt="homelab.drawio.png" width="800"/>
 
 # Services I use in my Lab:
 
