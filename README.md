@@ -1,38 +1,43 @@
 # About my Homelab Setup
 
 
+# Services I use in my Lab:
+
+Services that I bring up using Docker Compose
+
+| Service Name | Description |
+|--------------|-------------|
+| traefik | Reverse proxy/load balancer with Let's Encrypt for TLS Certs|
+| tailscale | VPN for remote access to my homelab |
+| portainer | Docker/Kubernetes Management Platform/UI |
+| pihole | DNS server and ad-blocker |
+| passbolt | Self Hosted Password/Secrets Manager |
+| db | MariaDB for Passbolt password manager |
+| jenkins | Continuous integration and delivery (CI/CD) server |
+| prometheus | Monitoring and alerting system (How I scrape metrics) |
+| grafana | Data visualization and analytics platform (Dashboards) |
+| cloudflare-tunnel | Cloudflare tunnel for secure access to some applications |
+
+
 
 # Bring up all services
 
-```docker-compose up -d```
-
-
-
-# Passbolt First Run
-
-Gotta generate a first user, and then you can create more users from the web interface.
+1. Create a `.env` file based on the `.env_template` file.
 
 ```
-docker-compose exec passbolt su -m -c "/usr/share/php/passbolt/bin/cake \
-						passbolt register_user \
-						-u <your@email.com> \
-						-f <yourname> \
-						-l <surname> \
-						-r admin" -s /bin/sh www-data
+cp env_template .env
 ```
 
-# Yubikey: https://upgrade.yubico.com/getapikey/
+2. Modify the values of each environment variable to whats suitable for your environment.
 
-
-go-passbolt-cli configure --serverAddress https://passbolt.devopsbrad.com --userPassword $PASSBOLT_PASSWORD --userPrivateKeyFile 'passbolt-recovery.key' --mfaDelay 60m --mfaMode noninteractive-totp
-
-
-go-passbolt-cli create resource --name "Test Resource" --password "Strong Password"
-go-passbolt-cli list resource
-go-passbolt-cli get resource --id <ResourceID>
-
-
-# Restoring from a Snapshot:
 ```
-sudo cp -rp /volume2/share2-SSD/#snapshot/GMT-08-2023.03.01-07.00.01/homelab/docker/volumes/* .
+vi .env
 ```
+
+3. Bring up all services with docker-compose up
+
+```
+docker-compose up -d
+```
+
+Got errors? Troubleshoot based on the error messages! This is a complex setup, likely it is better for you to start from scratch, and copy/paste components of my setup into your own setup.  I suggest bringing up one service at a time, then adding on things like Traefik.

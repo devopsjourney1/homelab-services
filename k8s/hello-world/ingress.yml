@@ -1,3 +1,4 @@
+#Super simple example of setting up ingress
 #kubectl create deployment web --image=gcr.io/google-samples/hello-app:1.
 #kubectl expose deployment web --type=NodePort --port=8080
 #kubectl get service web
