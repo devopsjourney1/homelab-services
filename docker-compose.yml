@@ -261,7 +261,7 @@ services:
       - "3025:3025"
       - "8443:443"
     volumes:
-      - tele-config:/etc/teleport
+      - tele-config:/etc/teleport.d
       - tele-data:/var/lib/teleport
       - tele-certs:/mnt/shared/certs
     networks:
