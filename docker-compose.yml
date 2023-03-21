@@ -246,6 +246,7 @@ services:
     labels:
       traefik.enable: "true"
       traefik.http.services.teleport.loadbalancer.server.port: "443"
+      traefik.http.services.teleport.loadbalancer.server.scheme: "https"
       traefik.http.routers.teleport-http.entrypoints: "web"
       traefik.http.routers.teleport-http.rule: "Host(`tele.devopsbrad.com`)"
       traefik.http.routers.teleport-https.entrypoints: "websecure"
@@ -268,20 +269,20 @@ services:
       services:
         aliases:
           - proxy.tele.devopsbrad.com
-  # BootStrap Teleport Certs
-  bootstrap:
-    image: public.ecr.aws/gravitational/teleport-lab:12
-    container_name: teleport-bootstrap
-    entrypoint: /bin/sh
-    command: -c "/etc/teleport.d/scripts/generate-certs.sh"
-    volumes:
-      - tele-config:/etc/teleport
-      - tele-data:/var/lib/teleport
-      - tele-certs:/mnt/shared/certs
-    depends_on:
-      - teleport
-    networks:
-      - services
+  # BootStrap Teleport Certs (only enable on first run)
+  # bootstrap:
+  #   image: public.ecr.aws/gravitational/teleport-lab:12
+  #   container_name: teleport-bootstrap
+  #   entrypoint: /bin/sh
+  #   command: -c "/etc/teleport.d/scripts/generate-certs.sh"
+  #   volumes:
+  #     - tele-config:/etc/teleport
+  #     - tele-data:/var/lib/teleport
+  #     - tele-certs:/mnt/shared/certs
+  #   depends_on:
+  #     - teleport
+  #   networks:
+  #     - services
 
 # Docker Volumes
 volumes:
