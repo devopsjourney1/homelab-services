@@ -245,13 +245,13 @@ services:
     restart: unless-stopped
     labels:
       traefik.enable: "true"
-      traefik.http.services.grafana.loadbalancer.server.port: "3000"
-      traefik.http.routers.grafana-http.entrypoints: "web"
-      traefik.http.routers.grafana-http.rule: "Host(`tele.devopsbrad.com`)"
-      traefik.http.routers.grafana-https.entrypoints: "websecure"
-      traefik.http.routers.grafana-https.rule: "Host(`tele.devopsbrad.com`)"
-      traefik.http.routers.grafana-https.tls: "true"
-      traefik.http.routers.grafana-https.tls.certresolver: "letsEncrypt-production"
+      traefik.http.services.teleport.loadbalancer.server.port: "443"
+      traefik.http.routers.teleport-http.entrypoints: "web"
+      traefik.http.routers.teleport-http.rule: "Host(`tele.devopsbrad.com`)"
+      traefik.http.routers.teleport-https.entrypoints: "websecure"
+      traefik.http.routers.teleport-https.rule: "Host(`tele.devopsbrad.com`)"
+      traefik.http.routers.teleport-https.tls: "true"
+      traefik.http.routers.teleport-https.tls.certresolver: "letsEncrypt-production"
     container_name: teleport
     entrypoint: /bin/sh
     command: -c "/usr/bin/dumb-init teleport start -d -c /etc/teleport.d/teleport.yaml"
