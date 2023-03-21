@@ -245,6 +245,7 @@ services:
     restart: unless-stopped
     labels:
       traefik.enable: "true"
+      # Web
       traefik.http.services.teleport.loadbalancer.server.port: "443"
       traefik.http.services.teleport.loadbalancer.server.scheme: "https"
       traefik.http.routers.teleport-http.entrypoints: "web"
@@ -253,6 +254,12 @@ services:
       traefik.http.routers.teleport-https.rule: "Host(`tele.devopsbrad.com`)"
       traefik.http.routers.teleport-https.tls: "true"
       traefik.http.routers.teleport-https.tls.certresolver: "letsEncrypt-production"
+      # SSH Proxy
+      traefik.tcp.routers.teleport-proxy.entrypoints: "teleport-proxy"
+      traefik.tcp.routers.teleport-proxy.rule: "HostSNI(`tele.devopsbrad.com`)"
+      #traefik.tcp.routers.teleport-proxy.tls: "true"
+      #traefik.tcp.routers.teleport-proxy.tls.certresolver: "letsEncrypt-production"
+      traefik.tcp.services.teleport-proxy.loadbalancer.server.port: "3024"
     container_name: teleport
     entrypoint: /bin/sh
     command: -c "/usr/bin/dumb-init teleport start -d -c /etc/teleport.d/teleport.yaml"

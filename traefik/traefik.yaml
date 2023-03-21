@@ -31,6 +31,8 @@ entryPoints:
     address: ":443"
   metrics:
     address: ":9091"
+  teleport-proxy:
+    address: ":3024"
 
 providers:
   docker:
