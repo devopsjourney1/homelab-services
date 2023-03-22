@@ -85,7 +85,6 @@ services:
       - "$PIHOLE_IP:80:80"
       - "$PIHOLE_IP:67:67"
     volumes:
-      - './hostnames.dns:/etc/pihole/custom.list'
       - 'pihole-config:/etc/pihole'
       - 'pihole-dns:/etc/dnsmasq.d'
     networks:
@@ -256,9 +255,7 @@ services:
       traefik.http.routers.teleport-https.tls.certresolver: "letsEncrypt-production"
       # SSH Proxy
       traefik.tcp.routers.teleport-proxy.entrypoints: "teleport-proxy"
-      traefik.tcp.routers.teleport-proxy.rule: "HostSNI(`tele.devopsbrad.com`)"
-      #traefik.tcp.routers.teleport-proxy.tls: "true"
-      #traefik.tcp.routers.teleport-proxy.tls.certresolver: "letsEncrypt-production"
+      traefik.tcp.routers.teleport-proxy.rule: "HostSNI(`*`)"
       traefik.tcp.services.teleport-proxy.loadbalancer.server.port: "3024"
     container_name: teleport
     entrypoint: /bin/sh

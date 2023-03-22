@@ -9,7 +9,8 @@
 192.168.0.186 pass.devopsbrad.com
 192.168.0.172 nas.devopsbrad.com
 192.168.0.186 router.devopsbrad.com
-192.168.0.146 argocd.devopsbrad.com
 192.168.0.242 hello-world.info
-192.168.0.146 grpc.argocd.devopsbrad.com
+192.168.0.145 grpc.argocd.devopsbrad.com
 192.168.0.186 tele.devopsbrad.com
+192.168.0.186 argocd.devopsbrad.com
+
