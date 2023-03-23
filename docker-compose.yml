@@ -237,7 +237,17 @@ services:
       resources:
         limits:
           memory: 48M
-  # Teleport Proxy)
+  busybox:
+    image: busybox:latest
+    hostname: busybox
+    restart: unless-stopped
+    container_name: busybox
+    command: /bin/sh -c 'while true; do echo "hello - $(date)" | nc -l -p 1234; sleep 1; done'
+    ports:
+      - "1234:1234"
+    networks:
+      services:
+  # Teleport Proxy
   teleport:
     image: public.ecr.aws/gravitational/teleport-lab:12
     hostname: tele.devopsbrad.com
