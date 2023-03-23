@@ -1,0 +1,4 @@
+## Argo Configs
+configs:
+  params:
+    server.insecure: true
