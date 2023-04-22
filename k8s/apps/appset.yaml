@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppSet
+metadata:
+  name: k3s-apps
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: cilium
+            cilium:
+              destination:
+                name: ''
+                namespace: cilium
+                server: 'https://kubernetes.default.svc'
+              source:
+                repoURL: https://github.com/cilium/cilium.git
+                path: install/kubernetes/cilium
+                targetRevision: HEAD
+                helm:
+                  releaseName: cilium
+              project: default
+              syncPolicy:
+                automated:
+                  prune: true
+                  selfHeal: true
+                syncOptions:
+                  - CreateNamespace=true
+
+  clusterSelector:
+    matchLabels:
+      app: argocd
