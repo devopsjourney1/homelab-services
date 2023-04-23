@@ -20,6 +20,8 @@ spec:
         targetRevision: HEAD
         helm:
           releaseName: '{{cluster}}-cilium'
+          valueFiles:
+            - values.yaml
       destination:
         server: '{{url}}'
         namespace: cilium
