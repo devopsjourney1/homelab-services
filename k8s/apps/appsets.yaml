@@ -1,8 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: k3s-apps
-  namespace: argocd
+  name: cilium
+  namespace: cilium
 spec:
   generators:
   - list:
