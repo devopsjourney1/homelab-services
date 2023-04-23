@@ -4,7 +4,6 @@ metadata:
   name: cilium
 spec:
   destination:
-    name: ''
     namespace: cilium
     server: https://kubernetes.default.svc
   project: default
@@ -12,10 +11,7 @@ spec:
     repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
     targetRevision: HEAD
     path: k8s/cilium
-  sources: []
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
     - CreateNamespace=true
 ---
@@ -25,7 +21,6 @@ metadata:
   name: argocd-ingress
 spec:
   destination:
-    name: ''
     namespace: argocd
     server: https://kubernetes.default.svc
   project: default
@@ -33,10 +28,7 @@ spec:
     repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
     targetRevision: HEAD
     path: k8s/argocd
-  sources: []
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
     - CreateNamespace=true
 ---
@@ -46,7 +38,6 @@ metadata:
   name: k3s-upgrades
 spec:
   destination:
-    name: ''
     namespace: system-upgrade
     server: https://kubernetes.default.svc
   project: default
@@ -54,9 +45,6 @@ spec:
     repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
     targetRevision: HEAD
     path: k8s/k3s
-  sources: []
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
     - CreateNamespace=true
