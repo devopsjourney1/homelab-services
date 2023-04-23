@@ -1,34 +1,34 @@
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: cilium
-  namespace: cilium
-spec:
-  generators:
-  - list:
-      elements:
-      - cluster: k3s
-        url: https://kubernetes.default.svc
-  template:
-    metadata:
-      name: '{{cluster}}-cilium'
-    spec:
-      project: default
-      source:
-        repoURL: git@github.com:devopsjourney1/homelab-services.git
-        path: k8s/cilium
-        targetRevision: HEAD
-        helm:
-          releaseName: '{{cluster}}-cilium'
-          valueFiles:
-            - values.yaml
-      sources: []
-      destination:
-        server: '{{url}}'
-        namespace: cilium
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: cilium
+#   namespace: cilium
+# spec:
+#   generators:
+#   - list:
+#       elements:
+#       - cluster: k3s
+#         url: https://kubernetes.default.svc
+#   template:
+#     metadata:
+#       name: '{{cluster}}-cilium'
+#     spec:
+#       project: default
+#       source:
+#         repoURL: git@github.com:devopsjourney1/homelab-services.git
+#         path: k8s/cilium
+#         targetRevision: HEAD
+#         helm:
+#           releaseName: '{{cluster}}-cilium'
+#           valueFiles:
+#             - values.yaml
+#       sources: []
+#       destination:
+#         server: '{{url}}'
+#         namespace: cilium
+#       syncPolicy:
+#         automated:
+#           prune: true
+#           selfHeal: true
+#         syncOptions:
+#           - CreateNamespace=true
