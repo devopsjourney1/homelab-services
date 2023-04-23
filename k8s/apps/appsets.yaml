@@ -59,3 +59,5 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+    kind: Ingress
+    path: argo-ingress.yaml
