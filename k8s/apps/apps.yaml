@@ -40,6 +40,9 @@ spec:
   destination:
     namespace: cilium
     server: https://kubernetes.default.svc
+    helm:
+      valueFiles:
+        - values.yaml
   project: default
   source:
     repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
@@ -62,6 +65,9 @@ spec:
     repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
     targetRevision: HEAD
     path: k8s/prometheus
+    helm:
+      valueFiles:
+        - values.yaml
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
