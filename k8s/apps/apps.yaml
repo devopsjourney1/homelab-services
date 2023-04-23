@@ -1,23 +1,6 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cilium
-spec:
-  destination:
-    namespace: cilium
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
-    targetRevision: HEAD
-    path: k8s/cilium
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
   name: argocd-ingress
 spec:
   destination:
@@ -45,6 +28,40 @@ spec:
     repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
     targetRevision: HEAD
     path: k8s/k3s
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+spec:
+  destination:
+    namespace: cilium
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
+    targetRevision: HEAD
+    path: k8s/cilium
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+spec:
+  destination:
+    namespace: prometheus
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
+    targetRevision: HEAD
+    path: k8s/prometheus
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

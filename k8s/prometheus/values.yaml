@@ -1,0 +1,6 @@
+#https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
+server:
+  ingress:
+    ## If true, Prometheus server Ingress will be created
+    ##
+    enabled: true
