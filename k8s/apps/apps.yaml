@@ -105,10 +105,12 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
+    chart: coredns
     repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
     targetRevision: HEAD
     path: k8s/coredns
     helm:
+      releaseName: coredns
       valueFiles:
         - values.yaml
   syncPolicy:
