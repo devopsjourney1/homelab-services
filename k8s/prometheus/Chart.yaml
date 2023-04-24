@@ -1,5 +1,5 @@
 apiVersion: v2
-name: prometheus-custom
+name: prometheus
 description: My Custom Prometheus Helm Chart
 
 type: application
