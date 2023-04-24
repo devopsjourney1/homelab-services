@@ -3,6 +3,8 @@ acme.json
 .env
 dns/*.conf
 *.log
+*.lock
+*.tgz
 
 # if any volumes, ignore them
 volumes/*
