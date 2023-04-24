@@ -1,8 +1,19 @@
 #https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
-operator:
+prometheus:
+  operator:
+    prometheus:
+      enabled: false
+      port: 9966
   prometheus:
     enabled: false
-    port: 9966
-prometheus:
-  enabled: false
-  port: 9962
+    port: 9962
+
+  server:
+    ingress:
+      enabled: true
+      hosts:
+        - prom.devopsbrad.com
+      tls:
+        - secretName: prometheus-server-tls
+          hosts:
+            - prom.domain.com

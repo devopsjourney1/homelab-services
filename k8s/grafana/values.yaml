@@ -2,10 +2,8 @@ grafana:
   grafana.ini:
     server:
       domain: graf.devopsbrad.com
-      root_url: "%(protocol)s://%(domain)s/grafana"
       serve_from_sub_path: true
   ingress:
     enabled: true
     hosts:
       - "graf.devopsbrad.com"
-    path: "/grafana"
