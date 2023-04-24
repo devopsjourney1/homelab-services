@@ -46,7 +46,6 @@ spec:
     targetRevision: HEAD
     path: k8s/cilium
     helm:
-      release: cilium
       valueFiles:
         - values.yaml
   syncPolicy:
@@ -67,7 +66,6 @@ spec:
     targetRevision: HEAD
     path: k8s/prometheus
     helm:
-      release: prometheus
       valueFiles:
         - values.yaml
   syncPolicy:
@@ -88,7 +86,6 @@ spec:
     targetRevision: HEAD
     path: k8s/grafana
     helm:
-      release: grafana
       valueFiles:
         - values.yaml
   syncPolicy:
