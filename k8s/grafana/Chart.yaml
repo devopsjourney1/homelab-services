@@ -1,5 +1,5 @@
 apiVersion: v2
-name: grafana-custom
+name: grafana
 description: My Custom Grafana Helm Chart
 
 type: application
