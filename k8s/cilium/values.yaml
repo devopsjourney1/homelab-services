@@ -1,8 +1,9 @@
 #https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
-operator:
+cilium:
+  operator:
+    prometheus:
+      enabled: true
+      port: 9966
   prometheus:
     enabled: true
-    port: 9966
-prometheus:
-  enabled: true
-  port: 9962
+    port: 9962

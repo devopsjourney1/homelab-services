@@ -1,5 +1,5 @@
 coredns:
-  replicas: 2
+  replicaCount: 2
   prometheus:
     service:
       enabled: true
