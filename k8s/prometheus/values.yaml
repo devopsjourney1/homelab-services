@@ -1,6 +1,8 @@
 #https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
-server:
-  ingress:
-    ## If true, Prometheus server Ingress will be created
-    ##
-    enabled: true
+operator:
+  prometheus:
+    enabled: false
+    port: 9966
+prometheus:
+  enabled: false
+  port: 9962

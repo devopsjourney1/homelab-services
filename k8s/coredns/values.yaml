@@ -1,3 +1,4 @@
+replicaCount: 2
 prometheus:
   service:
     enabled: true
