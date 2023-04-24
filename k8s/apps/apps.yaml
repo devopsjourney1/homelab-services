@@ -88,6 +88,9 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+      parameters:
+        - name: 'ingress.enabled'
+          value: "true"
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
