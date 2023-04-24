@@ -1,0 +1,11 @@
+prometheus:
+  service:
+    enabled: true
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9153"
+  monitor:
+    enabled: true
+    additionalLabels: {}
+    namespace: ""
+    interval: ""
