@@ -6,3 +6,5 @@ coredns:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9153"
+  service:
+    clusterIP: "10.43.0.10"
