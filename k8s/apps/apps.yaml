@@ -111,6 +111,9 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+      helmParameters:
+        - name: fullnameOverride
+          value: coredns
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
