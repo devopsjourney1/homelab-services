@@ -119,6 +119,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: portainer
+  namespace: portainer
 spec:
   destination:
     namespace: kube-system
