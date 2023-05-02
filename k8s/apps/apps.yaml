@@ -111,7 +111,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
-      helmParameters:
+      parameters:
         - name: fullnameOverride
           value: coredns
   syncPolicy:
@@ -122,10 +122,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: portainer
-  namespace: portainer
 spec:
   destination:
-    namespace: kube-system
+    namespace: portainer
     server: https://kubernetes.default.svc
   project: default
   source:
