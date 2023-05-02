@@ -1,0 +1,13 @@
+apiVersion: v2
+name: prometheus
+description: My Custom Prometheus Helm Chart
+
+type: application
+
+version: 0.1.0
+
+dependencies:
+  - name: portainer
+    version: 1.0.42
+
+    repository: https://portainer.github.io/k8s/
