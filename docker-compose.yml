@@ -226,6 +226,27 @@ services:
       resources:
         limits:
           memory: 64M
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    hostname: kuma
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.kuma.loadbalancer.server.port: "3001"
+      traefik.http.routers.kuma-http.entrypoints: "web"
+      traefik.http.routers.kuma-http.rule: "Host(`kuma.devopsbrad.com`)"
+      traefik.http.routers.kuma-https.entrypoints: "websecure"
+      traefik.http.routers.kuma-https.rule: "Host(`kuma.devopsbrad.com`)"
+      traefik.http.routers.kuma-https.tls: "true"
+      traefik.http.routers.kuma-https.tls.certresolver: "letsEncrypt-production"
+    volumes:
+      - kuma-storage:/app/data
+    networks:
+      - services
+    deploy:
+      resources:
+        limits:
+          memory: 64M
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     hostname: cloudflared
@@ -237,16 +258,6 @@ services:
       resources:
         limits:
           memory: 48M
-  busybox:
-    image: busybox:latest
-    hostname: busybox
-    restart: unless-stopped
-    container_name: busybox
-    command: /bin/sh -c 'while true; do echo "hello - $(date)" | nc -l -p 1234; sleep 1; done'
-    ports:
-      - "1234:1234"
-    networks:
-      services:
   # Teleport Proxy
   teleport:
     image: public.ecr.aws/gravitational/teleport-lab:12
@@ -330,6 +341,12 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '$VOLUME_PATH/grafana'
+  kuma-storage:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/kuma'
   prometheus-storage:
     driver: local
     driver_opts:
