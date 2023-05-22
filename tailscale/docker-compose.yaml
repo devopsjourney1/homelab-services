@@ -20,4 +20,5 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '$VOLUME_PATH/tailscale'
+      #device: '$VOLUME_PATH/tailscale'
+      device: '/tailscale'
