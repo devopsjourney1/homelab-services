@@ -246,7 +246,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 64M
+          memory: 200M
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     hostname: cloudflared
