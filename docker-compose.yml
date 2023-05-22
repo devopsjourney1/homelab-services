@@ -231,7 +231,7 @@ services:
     image: grafana/loki:latest
     hostname: loki
     restart: unless-stopped
-    user: "1026:100"
+    user: "$UID:$GUID"
     volumes:
       - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml:ro
       - grafana-loki-storage:/loki
