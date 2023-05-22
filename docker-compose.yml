@@ -89,6 +89,7 @@ services:
       - 'pihole-dns:/etc/dnsmasq.d'
     networks:
       services:
+        ipv4_address: 172.22.0.53
       home:
         ipv4_address: $PIHOLE_IP
     deploy:
@@ -182,7 +183,7 @@ services:
         limits:
           memory: 1024M
   prometheus:
-    image: prom/prometheus:v2.24.0
+    image: prom/prometheus:latest
     hostname: prometheus
     restart: unless-stopped
     labels:
@@ -203,7 +204,7 @@ services:
         limits:
           memory: 64M
   grafana:
-    image: grafana/grafana:7.3.0
+    image: grafana/grafana:latest
     hostname: grafana
     restart: unless-stopped
     labels:
@@ -226,6 +227,17 @@ services:
       resources:
         limits:
           memory: 64M
+  loki:
+    image: grafana/loki:latest
+    hostname: loki
+    restart: unless-stopped
+    user: "1026:100"
+    volumes:
+      - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml:ro
+      - grafana-loki-storage:/loki
+    command: -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - services
   uptime-kuma:
     image: louislam/uptime-kuma:1
     hostname: kuma
@@ -240,9 +252,12 @@ services:
       traefik.http.routers.kuma-https.tls: "true"
       traefik.http.routers.kuma-https.tls.certresolver: "letsEncrypt-production"
     volumes:
+      - ./resolv.conf:/etc/resolv.conf
       - kuma-storage:/app/data
     networks:
-      - services
+      services:
+      home:
+        ipv4_address: $KUMA_IP
     deploy:
       resources:
         limits:
@@ -341,6 +356,12 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '$VOLUME_PATH/grafana'
+  grafana-loki-storage:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/loki'
   kuma-storage:
     driver: local
     driver_opts:
