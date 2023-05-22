@@ -257,7 +257,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 48M
+          memory: 128M
   # Teleport Proxy
   teleport:
     image: public.ecr.aws/gravitational/teleport-lab:12
