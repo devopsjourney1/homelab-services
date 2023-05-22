@@ -242,10 +242,11 @@ services:
     image: grafana/promtail:2.8.0
     hostname: promtail
     restart: unless-stopped
-    user: "$UID:$GUID"
+    user: "0"
     volumes:
       - ./loki/promtail-config.yaml:/mnt/config/promtail-config.yaml:ro
-      - /var/log:/var/log
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /volume2/@docker/containers:/var/lib/docker/containers
     command: -config.file=/mnt/config/promtail-config.yaml
     networks:
       - services
