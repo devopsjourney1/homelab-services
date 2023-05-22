@@ -228,7 +228,7 @@ services:
         limits:
           memory: 64M
   loki:
-    image: grafana/loki:latest
+    image: grafana/loki:2.8.0
     hostname: loki
     restart: unless-stopped
     user: "$UID:$GUID"
@@ -236,6 +236,17 @@ services:
       - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml:ro
       - grafana-loki-storage:/loki
     command: -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - services
+  promtail:
+    image: grafana/promtail:2.8.0
+    hostname: promtail
+    restart: unless-stopped
+    user: "$UID:$GUID"
+    volumes:
+      - ./loki/promtail-config.yaml:/mnt/config/promtail-config.yaml:ro
+      - /var/log:/var/log
+    command: -config.file=/mnt/config/promtail-config.yaml
     networks:
       - services
   uptime-kuma:
