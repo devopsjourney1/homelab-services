@@ -34,6 +34,8 @@ services:
       resources:
         limits:
           memory: 64M
+    logging:
+          driver: json-file
   # Portainer Docker Management
   portainer:
     image: portainer/portainer
@@ -61,6 +63,8 @@ services:
       resources:
         limits:
           memory: 64M
+    logging:
+          driver: json-file
   # PiHole DNS Server
   pihole:
     image: pihole/pihole:latest
@@ -96,6 +100,8 @@ services:
       resources:
         limits:
           memory: 512M
+    logging:
+          driver: json-file
   #Database for Passbolt Password Manager
   db:
     image: mariadb:10.3
@@ -113,6 +119,8 @@ services:
       resources:
         limits:
           memory: 512M
+    logging:
+          driver: json-file
   #Passbolt Password Manager
   passbolt:
     image: passbolt/passbolt:latest-ce
@@ -154,6 +162,8 @@ services:
       resources:
         limits:
           memory: 512M
+    logging:
+          driver: json-file
   # Jenkins Master  
   jenkins:
     image: devopsjourney1/myjenkins-blueocean:2.375.3-1
@@ -182,6 +192,8 @@ services:
       resources:
         limits:
           memory: 1024M
+    logging:
+          driver: json-file
   prometheus:
     image: prom/prometheus:latest
     hostname: prometheus
@@ -203,6 +215,8 @@ services:
       resources:
         limits:
           memory: 64M
+    logging:
+          driver: json-file
   grafana:
     image: grafana/grafana:latest
     hostname: grafana
@@ -227,6 +241,8 @@ services:
       resources:
         limits:
           memory: 64M
+    logging:
+          driver: json-file
   loki:
     image: grafana/loki:2.8.0
     hostname: loki
@@ -238,6 +254,8 @@ services:
     command: -config.file=/mnt/config/loki-config.yaml
     networks:
       - services
+    logging:
+          driver: json-file
   promtail:
     image: grafana/promtail:2.8.0
     hostname: promtail
@@ -251,6 +269,8 @@ services:
     command: -config.file=/mnt/config/promtail-config.yaml
     networks:
       - services
+    logging:
+          driver: json-file
   uptime-kuma:
     image: louislam/uptime-kuma:1
     hostname: kuma
@@ -275,6 +295,8 @@ services:
       resources:
         limits:
           memory: 200M
+    logging:
+          driver: json-file
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     hostname: cloudflared
@@ -286,6 +308,8 @@ services:
       resources:
         limits:
           memory: 128M
+    logging:
+          driver: json-file
   # Teleport Proxy
   teleport:
     image: public.ecr.aws/gravitational/teleport-lab:12
@@ -322,6 +346,8 @@ services:
       services:
         aliases:
           - proxy.tele.devopsbrad.com
+    logging:
+          driver: json-file
   # BootStrap Teleport Certs (only enable on first run)
   # bootstrap:
   #   image: public.ecr.aws/gravitational/teleport-lab:12
