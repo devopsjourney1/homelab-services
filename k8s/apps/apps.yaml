@@ -141,10 +141,10 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: production
+  name: jenkins
 spec:
   destination:
-    namespace: portainer
+    namespace: production
     server: https://kubernetes.default.svc
   project: default
   source:
