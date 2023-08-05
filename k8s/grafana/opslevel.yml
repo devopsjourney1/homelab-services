@@ -17,5 +17,37 @@ service:
     path: "/k8s/grafana"
     provider: github
   tools:
+  - name: PagerDuty
+    category: incidents
+    url: https://bigriver.pagerduty.com/services/BWA23IT
+    environment: Production
+  - name: Splunk
+    category: logs
+    url: http://www.splunk.com/url
+    environment:
+  - name: Datadog
+    category: metrics
+    url: https://datadog.com/dashboard
+    environment:
+  - name: Confluence
+    category: runbooks
+    url: http://ua.atlassian.com/etc
+    environment:
+  - name: Snyk
+    category: other
+    url: https://app.snyk.io/org/john-g5v/
+    environment:
+  - name: Kubernetes
+    category: orchestrator
+    url: https://deploy.bigriver.com/catalog
+    environment:
+  - name: Pingdom
+    category: health_checks
+    url: https://bigriver.pingdom.com/catalog
+    environment: Staging
+  - name: Confluence
+    category: wiki
+    url: https://gitlab.com/jklabsinc/OpsLevel/wikis/home
+    environment:
   dependencies:
   alert_sources:
