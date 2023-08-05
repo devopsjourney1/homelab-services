@@ -27,7 +27,7 @@ service:
     environment:
   - name: Confluence
     category: wiki
-    url: https://gitlab.com/jklabsinc/OpsLevel/wikis/home
+    url: https://devopsbrad.atlassian.net/wiki/spaces/KB/pages/66004/Grafana
     environment:
   - name: ArgoCD
     category: GitOps
