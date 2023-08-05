@@ -6,7 +6,7 @@ service:
   tier: tier_3
   product: Observability
   owner: devops
-  system: Prod EKS Cluster
+  system: prod_eks_cluster
   language: YAML
   framework: Helmchart
   description: This is for our observability dashboards
