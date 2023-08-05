@@ -1,0 +1,50 @@
+---
+version: 1
+service:
+  name: traefik
+  lifecycle:
+  tier: tier_1
+  product: Core_Infra
+  owner: devops
+  system: prod_eks_cluster
+  language: YAML
+  framework: Helmchart
+  description: Main Proxy/Ingress for services
+  aliases:
+  - k8s:traefik-traefik
+  repositories:
+  - name: devopsjourney1/homelab-services
+    path: "/k8s/traefik"
+    provider: github
+  tools:
+  - name: PagerDuty
+    category: incidents
+    url: https://bigriver.pagerduty.com/services/BWA23IT
+    environment: Production
+  - name: Splunk
+    category: logs
+    url: http://www.splunk.com/url
+    environment:
+  - name: Confluence
+    category: wiki
+    url: https://devopsbrad.atlassian.net/wiki/spaces/KB/pages/66004/traefik
+    environment:
+  - name: ArgoCD
+    category: GitOps
+    url: https://argocd.devopsbrad.com/applications/argocd/traefik
+    environment:
+  - name: Kuma
+    category: health_checks
+    url: https://kuma.devopsbrad.com/dashboard/9
+    environment:
+  - name: Datadog
+    category: metrics
+    url: https://datadog.com/dashboard
+    environment:
+  - name: Kubernetes
+    category: orchestrator
+    url: https://deploy.bigriver.com/catalog
+    environment:
+  dependencies:
+  - alias: traefik-server
+  alert_sources:
