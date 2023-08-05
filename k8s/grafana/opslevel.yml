@@ -25,33 +25,25 @@ service:
     category: logs
     url: http://www.splunk.com/url
     environment:
-  - name: Datadog
-    category: metrics
-    url: https://datadog.com/dashboard
-    environment:
-  - name: Kuma
-    category: health_checks
-    url: https://kuma.devopsbrad.com/dashboard/9
-    environment:
-  - name: Snyk
-    category: other
-    url: https://app.snyk.io/org/john-g5v/
-    environment:
-  - name: Kubernetes
-    category: orchestrator
-    url: https://deploy.bigriver.com/catalog
+  - name: Confluence
+    category: wiki
+    url: https://gitlab.com/jklabsinc/OpsLevel/wikis/home
     environment:
   - name: ArgoCD
     category: GitOps
     url: https://argocd.devopsbrad.com/applications/argocd/grafana
     environment:
-  - name: Pingdom
+  - name: Kuma
     category: health_checks
-    url: https://bigriver.pingdom.com/catalog
+    url: https://kuma.devopsbrad.com/dashboard/9
     environment:
-  - name: Confluence
-    category: wiki
-    url: https://gitlab.com/jklabsinc/OpsLevel/wikis/home
+  - name: Datadog
+    category: metrics
+    url: https://datadog.com/dashboard
+    environment:
+  - name: Kubernetes
+    category: orchestrator
+    url: https://deploy.bigriver.com/catalog
     environment:
   dependencies:
   - alias: prometheus-server
