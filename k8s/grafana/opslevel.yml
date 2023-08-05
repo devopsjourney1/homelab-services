@@ -41,6 +41,10 @@ service:
     category: orchestrator
     url: https://deploy.bigriver.com/catalog
     environment:
+  - name: ArgoCD
+    category: GitOps
+    url: https://argocd.devopsbrad.com/applications/argocd/grafana
+    environment:
   - name: Pingdom
     category: health_checks
     url: https://bigriver.pingdom.com/catalog
