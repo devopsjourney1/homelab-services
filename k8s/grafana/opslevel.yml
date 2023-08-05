@@ -29,9 +29,9 @@ service:
     category: metrics
     url: https://datadog.com/dashboard
     environment:
-  - name: Confluence
-    category: runbooks
-    url: http://ua.atlassian.com/etc
+  - name: Kuma
+    category: health_checks
+    url: https://kuma.devopsbrad.com/dashboard/9
     environment:
   - name: Snyk
     category: other
@@ -48,7 +48,7 @@ service:
   - name: Pingdom
     category: health_checks
     url: https://bigriver.pingdom.com/catalog
-    environment: Staging
+    environment:
   - name: Confluence
     category: wiki
     url: https://gitlab.com/jklabsinc/OpsLevel/wikis/home
