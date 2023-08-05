@@ -50,4 +50,5 @@ service:
     url: https://gitlab.com/jklabsinc/OpsLevel/wikis/home
     environment:
   dependencies:
+  - alias: prometheus-server
   alert_sources:
