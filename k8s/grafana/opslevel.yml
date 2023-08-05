@@ -3,30 +3,15 @@ version: 1
 service:
   name: grafana
   lifecycle:
-  tier:
-  product:
+  tier: tier_3
+  product: Observability
   owner: devops
-  system:
-  language:
-  framework:
-  description:
+  system: Prod EKS Cluster
+  language: YAML
+  framework: Helmchart
+  description: This is for our observability dashboards
   aliases:
   - k8s:grafana-grafana
-  tags:
-  - key: app.kubernetes.io/instance
-    value: grafana
-  - key: app.kubernetes.io/managed-by
-    value: Helm
-  - key: app.kubernetes.io/name
-    value: grafana
-  - key: app.kubernetes.io/version
-    value: 9.4.7
-  - key: argocd.argoproj.io/instance
-    value: grafana
-  - key: helm.sh/chart
-    value: grafana-6.55.0
-  - key: imported
-    value: kubectl-opslevel
   repositories:
   - name: devopsjourney1/homelab-services
     path: "/k8s/grafana"
