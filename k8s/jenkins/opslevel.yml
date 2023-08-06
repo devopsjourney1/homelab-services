@@ -46,5 +46,5 @@ service:
     url: https://deploy.bigriver.com/catalog
     environment:
   dependencies:
-  - alias: prometheus-server
+  - alias: traefik
   alert_sources:
