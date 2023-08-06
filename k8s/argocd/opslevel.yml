@@ -9,7 +9,7 @@ service:
   system: prod_eks_cluster
   language: YAML
   framework: Helmchart
-  description: This is for our observability dashboards
+  description: We use ArgoCD for GitOps
   aliases:
   - k8s:argocd-argocd
   repositories:
@@ -31,7 +31,7 @@ service:
     environment:
   - name: ArgoCD
     category: GitOps
-    url: https://argocd.devopsbrad.com/applications/argocd/argocd
+    url: https://argocd.devopsbrad.com/
     environment:
   - name: Kuma
     category: health_checks

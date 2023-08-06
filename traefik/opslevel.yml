@@ -5,7 +5,7 @@ service:
   lifecycle:
   tier: tier_1
   product: Core_Infra
-  owner: devops
+  owner: sre
   system: prod_eks_cluster
   language: YAML
   framework: Helmchart

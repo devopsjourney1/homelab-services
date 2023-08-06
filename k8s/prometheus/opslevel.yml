@@ -5,11 +5,11 @@ service:
   lifecycle:
   tier: tier_3
   product: Observability
-  owner: devops
+  owner: sre
   system: prod_eks_cluster
   language: YAML
   framework: Helmchart
-  description: This is for our observability dashboards
+  description: This is for scrapping our metrics for observability
   aliases:
   - k8s:prometheus-prometheus
   repositories:

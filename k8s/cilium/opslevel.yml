@@ -5,11 +5,11 @@ service:
   lifecycle:
   tier: tier_1
   product: Core_Infrastructure
-  owner: devops
+  owner: operations
   system: prod_eks_cluster
   language: YAML
   framework: Helmchart
-  description: This is for our observability dashboards
+  description: Cilium is used as our CNI/Service Mesh in Kubernetes.
   aliases:
   - k8s:cilium-cilium
   repositories:

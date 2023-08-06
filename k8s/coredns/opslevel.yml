@@ -5,11 +5,11 @@ service:
   lifecycle:
   tier: tier_1
   product: Core_Infrastructure
-  owner: devops
+  owner: sre
   system: prod_eks_cluster
   language: YAML
   framework: Helmchart
-  description: This is for our observability dashboards
+  description: CoreDNS for Kubernetes Name resolution
   aliases:
   - k8s:coredns-coredns
   repositories:

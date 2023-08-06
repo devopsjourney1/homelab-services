@@ -9,7 +9,7 @@ service:
   system: prod_eks_cluster
   language: YAML
   framework: Helmchart
-  description: This is for our observability dashboards
+  description: Jenkins for all our CI/CD Build pipelines
   aliases:
   - k8s:jenkins-jenkins
   repositories:
