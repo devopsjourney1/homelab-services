@@ -4,7 +4,6 @@ metadata:
   name: argo-rollouts-server-http-ingress
   namespace: argo-rollouts
   annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 spec:
   rules:
