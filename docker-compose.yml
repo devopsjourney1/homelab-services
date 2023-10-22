@@ -19,7 +19,7 @@ services:
       # Traffic Ports
       - "$TRAEFIK_IP:80:80"
       - "$TRAEFIK_IP:443:443"
-      - "$TRAEFIK_IP:8080:8080"
+      - "$TRAEFIK_IP:8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.yaml:/traefik.yaml:ro
