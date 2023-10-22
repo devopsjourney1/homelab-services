@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argo-rollouts-server-http-ingress
+  namespace: argo-rollouts
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argo-workflows-server
+            port:
+              number: 2746
+    host: workflows.devopsbrad.com
+  # tls:
+  # - hosts:
+  #   - rollouts-dashboard.devopsbrad.com
+  #   secretName: argocd-secret # do not change, this is provided by Argo CD
