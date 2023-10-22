@@ -14,11 +14,11 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: rollouts-dashboard
+            name: argo-rollouts-dashboard
             port:
               name: http
-    host: rollouts-dashboard.devopsbrad.com
-  tls:
-  - hosts:
-    - rollouts-dashboard.devopsbrad.com
-    secretName: argocd-secret # do not change, this is provided by Argo CD
+    host: rollouts.devopsbrad.com
+  # tls:
+  # - hosts:
+  #   - rollouts-dashboard.devopsbrad.com
+  #   secretName: argocd-secret # do not change, this is provided by Argo CD
