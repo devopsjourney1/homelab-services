@@ -16,7 +16,7 @@ spec:
           service:
             name: argo-rollouts-dashboard
             port:
-              name: http
+              number: 3100
     host: rollouts.devopsbrad.com
   # tls:
   # - hosts:
