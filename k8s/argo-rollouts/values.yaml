@@ -1,6 +1,6 @@
 #https://artifacthub.io/packages/helm/argo/argo-rollouts/2.32.0
 
-
-dashboard:
-  # -- Deploy dashboard server
-  enabled: true
+argo-rollouts:
+  dashboard:
+    # -- Deploy dashboard server
+    enabled: true
