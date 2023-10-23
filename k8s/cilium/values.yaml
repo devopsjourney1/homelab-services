@@ -1,5 +1,6 @@
 #https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
 cilium:
+  localRedirectPolicy: true
   operator:
     prometheus:
       enabled: true
@@ -7,4 +8,3 @@ cilium:
   prometheus:
     enabled: true
     port: 9962
-  localRedirectPolicy: false
