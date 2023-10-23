@@ -7,4 +7,4 @@ cilium:
   prometheus:
     enabled: true
     port: 9962
-  localRedirectPolicy: true
+  localRedirectPolicy: false
