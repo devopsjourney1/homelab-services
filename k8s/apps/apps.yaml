@@ -178,3 +178,24 @@ spec:
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-image-updater
+spec:
+  destination:
+    namespace: argocd-image-updater
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
+    targetRevision: HEAD
+    path: k8s/argocd-image-updater
+    helm:
+      ignoreMissingValueFiles: true
+      valueFiles:
+        - values.yaml
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

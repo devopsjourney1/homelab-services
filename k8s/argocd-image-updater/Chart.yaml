@@ -1,0 +1,13 @@
+apiVersion: v2
+name: argocd-image-updater
+description: My Custom argo-workflows Helm Chart
+
+type: application
+
+version: 0.1.0
+
+
+dependencies:
+  - name: argocd-image-updater
+    version: 0.36.1
+    repository: https://argoproj.github.io/argo-helm
