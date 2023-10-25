@@ -1,6 +1,6 @@
 #https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
 cilium:
-  localRedirectPolicy: "true"
+  localRedirectPolicy: "false"
   kubeProxyReplacement: "strict"
   operator:
     prometheus:
