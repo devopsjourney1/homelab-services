@@ -15,11 +15,11 @@ services:
       traefik.http.routers.traefik-https.tls.certresolver: "letsEncrypt-production"
     environment:
       - CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN
-    ports:
+#    ports:
       # Traffic Ports
-      - "$TRAEFIK_IP:80:80"
-      - "$TRAEFIK_IP:443:443"
-      - "$TRAEFIK_IP:8081:8080"
+      #- "$TRAEFIK_IP:80:80"
+      #- "$TRAEFIK_IP:443:443"
+      #- "$TRAEFIK_IP:8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.yaml:/traefik.yaml:ro
@@ -83,11 +83,11 @@ services:
       - "FTLCONF_REPLY_ADDR4=$PIHOLE_IP"
       - "TZ=America/New_York"
       - "WEBPASSWORD=$PIHOLE_PASSWORD"
-    ports:
-      - "$PIHOLE_IP:53:53/tcp"
-      - "$PIHOLE_IP:53:53/udp"
-      - "$PIHOLE_IP:80:80"
-      - "$PIHOLE_IP:67:67"
+    #ports:
+     # - "$PIHOLE_IP:53:53/tcp"
+      #- "$PIHOLE_IP:53:53/udp"
+      #- "$PIHOLE_IP:80:80"
+      #- "$PIHOLE_IP:67:67"
     volumes:
       - 'pihole-config:/etc/pihole'
       - 'pihole-dns:/etc/dnsmasq.d'
