@@ -37,34 +37,34 @@ services:
     logging:
           driver: json-file
   # Portainer Docker Management
-  portainer:
-    image: portainer/portainer
-    hostname: portainer
-    restart: unless-stopped
-    environment:
-      - SESSION_TIMEOUT=315360000
-    labels:
-      traefik.enable: "true"
-      traefik.docker.network: "traefik"
-      traefik.http.services.portainer.loadbalancer.server.port: "9000"
-      traefik.http.routers.portainer-http.entrypoints: "web"
-      traefik.http.routers.portainer-http.rule: "Host(`portainer.devopsbrad.com`)"
-      traefik.http.routers.portainer-https.entrypoints: "websecure"
-      traefik.http.routers.portainer-https.rule: "Host(`portainer.devopsbrad.com`)"
-      traefik.http.routers.portainer-https.tls: "true"
-      traefik.http.routers.portainer-https.tls.certresolver: "letsEncrypt-production"
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - portainer_data:/data
-    networks:
-      - services
-    deploy:
-      resources:
-        limits:
-          memory: 64M
-    logging:
-          driver: json-file
+  # portainer:
+  #   image: portainer/portainer
+  #   hostname: portainer
+  #   restart: unless-stopped
+  #   environment:
+  #     - SESSION_TIMEOUT=315360000
+  #   labels:
+  #     traefik.enable: "true"
+  #     traefik.docker.network: "traefik"
+  #     traefik.http.services.portainer.loadbalancer.server.port: "9000"
+  #     traefik.http.routers.portainer-http.entrypoints: "web"
+  #     traefik.http.routers.portainer-http.rule: "Host(`portainer.devopsbrad.com`)"
+  #     traefik.http.routers.portainer-https.entrypoints: "websecure"
+  #     traefik.http.routers.portainer-https.rule: "Host(`portainer.devopsbrad.com`)"
+  #     traefik.http.routers.portainer-https.tls: "true"
+  #     traefik.http.routers.portainer-https.tls.certresolver: "letsEncrypt-production"
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - portainer_data:/data
+  #   networks:
+  #     - services
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 64M
+  #   logging:
+  #         driver: json-file
   # PiHole DNS Server
   pihole:
     image: pihole/pihole:latest
@@ -164,113 +164,113 @@ services:
           memory: 512M
     logging:
           driver: json-file
-  # Jenkins Master  
-  jenkins:
-    image: devopsjourney1/myjenkins-blueocean:2.375.3-1
-    hostname: jenkins
-    restart: unless-stopped
-    labels:
-      traefik.enable: "true"
-      traefik.docker.network: "traefik"
-      traefik.http.services.jenkins.loadbalancer.server.port: "8080"
-      traefik.http.routers.jenkins-http.entrypoints: "web"
-      traefik.http.routers.jenkins-http.rule: "Host(`jenkins.devopsbrad.com`)"
-      traefik.http.routers.jenkins-https.entrypoints: "websecure"
-      traefik.http.routers.jenkins-https.rule: "Host(`jenkins.devopsbrad.com`)"
-      traefik.http.routers.jenkins-https.tls: "true"
-      traefik.http.routers.jenkins-https.tls.certresolver: "letsEncrypt-production"
-    volumes:
-    - jenkins-data:/var/jenkins_home
-    - jenkins-docker-certs:/certs/client:ro
-    environment:
-      DOCKER_HOST: tcp://docker:2376
-      DOCKER_CERT_PATH: /certs/client
-      DOCKER_TLS_VERIFY: "1"
-    networks:
-      - services
-    deploy:
-      resources:
-        limits:
-          memory: 1024M
-    logging:
-          driver: json-file
-  prometheus:
-    image: prom/prometheus:latest
-    hostname: prometheus
-    restart: unless-stopped
-    labels:
-      traefik.enable: "true"
-      traefik.http.services.prometheus.loadbalancer.server.port: "9090"
-      traefik.http.routers.prometheus-http.entrypoints: "web"
-      traefik.http.routers.prometheus-http.rule: "Host(`prom.devopsbrad.com`)"
-      traefik.http.routers.prometheus-https.entrypoints: "websecure"
-      traefik.http.routers.prometheus-https.rule: "Host(`prom.devopsbrad.com`)"
-      traefik.http.routers.prometheus-https.tls: "true"
-      traefik.http.routers.prometheus-https.tls.certresolver: "letsEncrypt-production"
-    volumes:
-      - prometheus-storage:/prometheus
-    networks:
-      - services
-    deploy:
-      resources:
-        limits:
-          memory: 64M
-    logging:
-          driver: json-file
-  grafana:
-    image: grafana/grafana:latest
-    hostname: grafana
-    restart: unless-stopped
-    labels:
-      traefik.enable: "true"
-      traefik.http.services.grafana.loadbalancer.server.port: "3000"
-      traefik.http.routers.grafana-http.entrypoints: "web"
-      traefik.http.routers.grafana-http.rule: "Host(`grafana.devopsbrad.com`)"
-      traefik.http.routers.grafana-https.entrypoints: "websecure"
-      traefik.http.routers.grafana-https.rule: "Host(`grafana.devopsbrad.com`)"
-      traefik.http.routers.grafana-https.tls: "true"
-      traefik.http.routers.grafana-https.tls.certresolver: "letsEncrypt-production"
-    volumes:
-      - grafana-storage:/var/lib/grafana
-    environment:
-      - GF_SECURITY_ADMIN_USER=$GF_SECURITY_ADMIN_USER
-      - GF_SECURITY_ADMIN_PASSWORD=$GF_SECURITY_ADMIN_PASSWORD
-    networks:
-      - services
-    deploy:
-      resources:
-        limits:
-          memory: 64M
-    logging:
-          driver: json-file
-  loki:
-    image: grafana/loki:2.8.0
-    hostname: loki
-    restart: unless-stopped
-    user: "$UID:$GUID"
-    volumes:
-      - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml:ro
-      - grafana-loki-storage:/loki
-    command: -config.file=/mnt/config/loki-config.yaml
-    networks:
-      - services
-    logging:
-          driver: json-file
-  promtail:
-    image: grafana/promtail:2.8.0
-    hostname: promtail
-    restart: unless-stopped
-    user: "0"
-    volumes:
-      - ./loki/promtail-config.yaml:/mnt/config/promtail-config.yaml:ro
-      #- /var/log:/var/log
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /volume2/@docker/containers:/var/lib/docker/containers
-    command: -config.file=/mnt/config/promtail-config.yaml
-    networks:
-      - services
-    logging:
-          driver: json-file
+  # # Jenkins Master  
+  # jenkins:
+  #   image: devopsjourney1/myjenkins-blueocean:2.375.3-1
+  #   hostname: jenkins
+  #   restart: unless-stopped
+  #   labels:
+  #     traefik.enable: "true"
+  #     traefik.docker.network: "traefik"
+  #     traefik.http.services.jenkins.loadbalancer.server.port: "8080"
+  #     traefik.http.routers.jenkins-http.entrypoints: "web"
+  #     traefik.http.routers.jenkins-http.rule: "Host(`jenkins.devopsbrad.com`)"
+  #     traefik.http.routers.jenkins-https.entrypoints: "websecure"
+  #     traefik.http.routers.jenkins-https.rule: "Host(`jenkins.devopsbrad.com`)"
+  #     traefik.http.routers.jenkins-https.tls: "true"
+  #     traefik.http.routers.jenkins-https.tls.certresolver: "letsEncrypt-production"
+  #   volumes:
+  #   - jenkins-data:/var/jenkins_home
+  #   - jenkins-docker-certs:/certs/client:ro
+  #   environment:
+  #     DOCKER_HOST: tcp://docker:2376
+  #     DOCKER_CERT_PATH: /certs/client
+  #     DOCKER_TLS_VERIFY: "1"
+  #   networks:
+  #     - services
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 1024M
+  #   logging:
+  #         driver: json-file
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   hostname: prometheus
+  #   restart: unless-stopped
+  #   labels:
+  #     traefik.enable: "true"
+  #     traefik.http.services.prometheus.loadbalancer.server.port: "9090"
+  #     traefik.http.routers.prometheus-http.entrypoints: "web"
+  #     traefik.http.routers.prometheus-http.rule: "Host(`prom.devopsbrad.com`)"
+  #     traefik.http.routers.prometheus-https.entrypoints: "websecure"
+  #     traefik.http.routers.prometheus-https.rule: "Host(`prom.devopsbrad.com`)"
+  #     traefik.http.routers.prometheus-https.tls: "true"
+  #     traefik.http.routers.prometheus-https.tls.certresolver: "letsEncrypt-production"
+  #   volumes:
+  #     - prometheus-storage:/prometheus
+  #   networks:
+  #     - services
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 64M
+  #   logging:
+  #         driver: json-file
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   hostname: grafana
+  #   restart: unless-stopped
+  #   labels:
+  #     traefik.enable: "true"
+  #     traefik.http.services.grafana.loadbalancer.server.port: "3000"
+  #     traefik.http.routers.grafana-http.entrypoints: "web"
+  #     traefik.http.routers.grafana-http.rule: "Host(`grafana.devopsbrad.com`)"
+  #     traefik.http.routers.grafana-https.entrypoints: "websecure"
+  #     traefik.http.routers.grafana-https.rule: "Host(`grafana.devopsbrad.com`)"
+  #     traefik.http.routers.grafana-https.tls: "true"
+  #     traefik.http.routers.grafana-https.tls.certresolver: "letsEncrypt-production"
+  #   volumes:
+  #     - grafana-storage:/var/lib/grafana
+  #   environment:
+  #     - GF_SECURITY_ADMIN_USER=$GF_SECURITY_ADMIN_USER
+  #     - GF_SECURITY_ADMIN_PASSWORD=$GF_SECURITY_ADMIN_PASSWORD
+  #   networks:
+  #     - services
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 64M
+  #   logging:
+  #         driver: json-file
+  # loki:
+  #   image: grafana/loki:2.8.0
+  #   hostname: loki
+  #   restart: unless-stopped
+  #   user: "$UID:$GUID"
+  #   volumes:
+  #     - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml:ro
+  #     - grafana-loki-storage:/loki
+  #   command: -config.file=/mnt/config/loki-config.yaml
+  #   networks:
+  #     - services
+  #   logging:
+  #         driver: json-file
+  # promtail:
+  #   image: grafana/promtail:2.8.0
+  #   hostname: promtail
+  #   restart: unless-stopped
+  #   user: "0"
+  #   volumes:
+  #     - ./loki/promtail-config.yaml:/mnt/config/promtail-config.yaml:ro
+  #     #- /var/log:/var/log
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /volume2/@docker/containers:/var/lib/docker/containers
+  #   command: -config.file=/mnt/config/promtail-config.yaml
+  #   networks:
+  #     - services
+  #   logging:
+  #         driver: json-file
   uptime-kuma:
     image: louislam/uptime-kuma:1
     hostname: kuma
@@ -297,19 +297,19 @@ services:
           memory: 200M
     logging:
           driver: json-file
-  cloudflare-tunnel:
-    image: cloudflare/cloudflared:latest
-    hostname: cloudflared
-    restart: unless-stopped
-    command: tunnel --no-autoupdate run --token $CLOUDFLARE_TUNNEL_TOKEN
-    networks:
-      - services
-    deploy:
-      resources:
-        limits:
-          memory: 128M
-    logging:
-          driver: json-file
+  # cloudflare-tunnel:
+  #   image: cloudflare/cloudflared:latest
+  #   hostname: cloudflared
+  #   restart: unless-stopped
+  #   command: tunnel --no-autoupdate run --token $CLOUDFLARE_TUNNEL_TOKEN
+  #   networks:
+  #     - services
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 128M
+  #   logging:
+  #         driver: json-file
   # Teleport Proxy
   teleport:
     image: public.ecr.aws/gravitational/teleport-lab:12
