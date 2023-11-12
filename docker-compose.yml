@@ -288,11 +288,11 @@ services:
       - ./resolv.conf:/etc/resolv.conf
       - kuma-storage:/app/data
     networks:
-      services:
       home:
         ipv4_address: $KUMA_IP
+      services:
     dns:
-      - 172.21.0.53
+      - $PIHOLE_IP
     deploy:
       resources:
         limits:
