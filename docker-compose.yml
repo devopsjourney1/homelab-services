@@ -465,7 +465,6 @@ volumes:
 # Docker Networks
 networks:
   services:
-      - 172.21.0.53 
     driver: bridge
     ipam:
       config:
