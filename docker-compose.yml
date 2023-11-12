@@ -285,7 +285,6 @@ services:
       traefik.http.routers.kuma-https.tls: "true"
       traefik.http.routers.kuma-https.tls.certresolver: "letsEncrypt-production"
     volumes:
-      - ./resolv.conf:/etc/resolv.conf
       - kuma-storage:/app/data
     networks:
       home:
