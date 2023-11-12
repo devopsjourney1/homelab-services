@@ -291,6 +291,8 @@ services:
       services:
       home:
         ipv4_address: $KUMA_IP
+    dns:
+      - 172.21.0.53
     deploy:
       resources:
         limits:
@@ -346,6 +348,8 @@ services:
       services:
         aliases:
           - proxy.tele.devopsbrad.com
+    dns:
+      - 172.21.0.53
     logging:
           driver: json-file
   # BootStrap Teleport Certs (only enable on first run)
@@ -461,6 +465,7 @@ volumes:
 # Docker Networks
 networks:
   services:
+      - 172.21.0.53 
     driver: bridge
     ipam:
       config:
