@@ -93,7 +93,7 @@ services:
       - 'pihole-dns:/etc/dnsmasq.d'
     networks:
       services:
-        ipv4_address: 172.22.0.53
+        ipv4_address: 172.21.0.53
       home:
         ipv4_address: $PIHOLE_IP
     deploy:
@@ -461,6 +461,12 @@ volumes:
 # Docker Networks
 networks:
   services:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+          gateway: 172.21.0.1
+          ip_range: 172.21.0.0/16
   home:
     driver: macvlan
     driver_opts:
