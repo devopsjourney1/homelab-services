@@ -56,6 +56,23 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: 'git@github.com:devopsjourney1/homelab-services.git'
+    targetRevision: HEAD
+    path: k8s/argocd
+    helm:
+      valueFiles:
+        - values.yaml
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: prometheus
 spec:
   destination:
