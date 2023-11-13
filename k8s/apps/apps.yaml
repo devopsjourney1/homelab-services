@@ -48,9 +48,10 @@ spec:
     helm:
       valueFiles:
         - values.yaml
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
+  # syncPolicy:
+  #   automated: {}
+  #   syncOptions:
+  #   - CreateNamespace=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
