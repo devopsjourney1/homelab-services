@@ -2,7 +2,6 @@
 cilium:
   operator.replicas: 1
   localRedirectPolicy: true
-  routingMode: native
   kubeProxyReplacement: true
   operator:
     prometheus:
