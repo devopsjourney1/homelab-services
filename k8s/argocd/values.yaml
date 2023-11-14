@@ -1,6 +1,6 @@
 ## Argo Configs
 ---
-argo-cd:
+argocd:
   configs:
     params:
       server.insecure: true
