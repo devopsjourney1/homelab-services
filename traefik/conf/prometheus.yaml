@@ -1,0 +1,15 @@
+http:
+  routers:
+    argocd-router:
+      rule: "Host(`prom.devopsbrad.com`)"
+      service: prom-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsEncrypt-production
+
+  services:
+    prom-service:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.0.100"
