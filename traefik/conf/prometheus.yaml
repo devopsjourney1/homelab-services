@@ -1,6 +1,6 @@
 http:
   routers:
-    argocd-router:
+    prom-router:
       rule: "Host(`prom.devopsbrad.com`)"
       service: prom-service
       entryPoints:
