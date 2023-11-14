@@ -1,9 +1,9 @@
 #https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
 cilium:
-  operator.replicas: 1
   localRedirectPolicy: true
   kubeProxyReplacement: true
   operator:
+    replicas: 1
     prometheus:
       enabled: true
       port: 9966
