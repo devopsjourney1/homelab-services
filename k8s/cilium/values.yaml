@@ -2,6 +2,17 @@
 cilium:
   localRedirectPolicy: true
   kubeProxyReplacement: true
+  hubble:
+    enabled: true
+    metrics:
+      enableOpenMetrics: true
+      enabled:
+        - dns:query;ignoreAAAA
+        - drop
+        - tcp
+        - flow
+        - icmp
+        - http
   operator:
     replicas: 1
     prometheus:
