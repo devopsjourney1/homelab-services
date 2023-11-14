@@ -8,4 +8,4 @@ grafana:
     enabled: true
     hosts:
       - "grafana.devopsbrad.com"
-    path: "/"
+    path: "/grafana"
