@@ -1,5 +1,5 @@
 apiVersion: v2
-name: argocd
+name: argo-cd
 description: My Custom ArgoCD Helm Chart
 
 type: application
