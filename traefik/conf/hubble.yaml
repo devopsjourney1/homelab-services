@@ -1,0 +1,15 @@
+http:
+  routers:
+    hubble-router:
+      rule: "Host(`hubble.devopsbrad.com`)"
+      service: hubble-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsEncrypt-production
+
+  services:
+    hubble-service:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.0.100"
