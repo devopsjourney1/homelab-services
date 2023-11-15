@@ -8,6 +8,10 @@ cilium:
       enabled: true
     ui:
       enabled: true
+      ingress:
+        enabled: true
+        hosts:
+          - "hubble.devopsbrad.com"
     metrics:
       enableOpenMetrics: true
       enabled:
