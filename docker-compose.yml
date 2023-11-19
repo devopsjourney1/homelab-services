@@ -254,6 +254,8 @@ services:
     command: -config.file=/mnt/config/loki-config.yaml
     networks:
       - services
+    ports:
+      - "3100:3100"
     logging:
           driver: json-file
   promtail:
