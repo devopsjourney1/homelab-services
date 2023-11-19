@@ -1,0 +1,15 @@
+---
+apiVersion: v2
+name: loki-stack
+description: My Custom loki-stack Helm Chart
+
+type: application
+
+version: 2.9.11
+appVersion: v2.6.1
+
+
+dependencies:
+  - name: loki-stack
+    version: 2.9.11
+    repository: https://prometheus-community.github.io/helm-charts
