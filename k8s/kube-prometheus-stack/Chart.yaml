@@ -5,6 +5,11 @@ description: My Custom Prometheus Helm Chart
 
 type: application
 
+version: 0.1.0
+
+appVersion: 2.43.0
+
+
 dependencies:
   - name: kube-prometheus-stack
     version: 0.69.1
