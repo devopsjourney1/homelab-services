@@ -243,34 +243,34 @@ services:
   #         memory: 64M
   #   logging:
   #         driver: json-file
-  # loki:
-  #   image: grafana/loki:2.8.0
-  #   hostname: loki
-  #   restart: unless-stopped
-  #   user: "$UID:$GUID"
-  #   volumes:
-  #     - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml:ro
-  #     - grafana-loki-storage:/loki
-  #   command: -config.file=/mnt/config/loki-config.yaml
-  #   networks:
-  #     - services
-  #   logging:
-  #         driver: json-file
-  # promtail:
-  #   image: grafana/promtail:2.8.0
-  #   hostname: promtail
-  #   restart: unless-stopped
-  #   user: "0"
-  #   volumes:
-  #     - ./loki/promtail-config.yaml:/mnt/config/promtail-config.yaml:ro
-  #     #- /var/log:/var/log
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - /volume2/@docker/containers:/var/lib/docker/containers
-  #   command: -config.file=/mnt/config/promtail-config.yaml
-  #   networks:
-  #     - services
-  #   logging:
-  #         driver: json-file
+  loki:
+    image: grafana/loki:2.8.0
+    hostname: loki
+    restart: unless-stopped
+    user: "$UID:$GUID"
+    volumes:
+      - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml:ro
+      - grafana-loki-storage:/loki
+    command: -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - services
+    logging:
+          driver: json-file
+  promtail:
+    image: grafana/promtail:2.8.0
+    hostname: promtail
+    restart: unless-stopped
+    user: "0"
+    volumes:
+      - ./loki/promtail-config.yaml:/mnt/config/promtail-config.yaml:ro
+      #- /var/log:/var/log
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /volume2/@docker/containers:/var/lib/docker/containers
+    command: -config.file=/mnt/config/promtail-config.yaml
+    networks:
+      - services
+    logging:
+          driver: json-file
   uptime-kuma:
     image: louislam/uptime-kuma:1
     hostname: kuma
