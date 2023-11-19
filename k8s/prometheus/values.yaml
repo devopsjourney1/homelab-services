@@ -2,7 +2,7 @@
 prometheus:
   operator:
     prometheus:
-      enabled: false
+      enabled: true
       port: 9966
   prometheus:
     enabled: false
