@@ -1,14 +1,29 @@
-#https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
-prometheus:
-  operator:
-    prometheus:
-      enabled: false
-      port: 9966
-  prometheus:
-    enabled: false
-    port: 9962
+kube-prometheus-stack:
+  alertmanager:
+    enabled: true
+    ingress:
+      enabled: true
+      hosts:
+        - alerts.devopsbrad.com
+      tls:
+        - secretName: alertmanager-server-tls
+          hosts:
+            - alerts.devopsbrad.com
 
-  server:
+  grafana:
+    enabled: true
+    adminPassword: prom-operator
+    ingress:
+      enabled: true
+      hosts:
+        - grafana.devopsbrad.com
+      tls:
+        - secretName: grafana-server-tls
+          hosts:
+            - grafana.devopsbrad.com
+
+  prometheus:
+    enabled: true
     ingress:
       enabled: true
       hosts:
@@ -16,4 +31,4 @@ prometheus:
       tls:
         - secretName: prometheus-server-tls
           hosts:
-            - prom.domain.com
+            - prom.devopsbrad.com

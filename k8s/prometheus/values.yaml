@@ -16,4 +16,4 @@ prometheus:
       tls:
         - secretName: prometheus-server-tls
           hosts:
-            - prom.domain.com
+            - prom.devopsbrad.com
