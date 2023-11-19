@@ -69,6 +69,10 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -86,6 +90,10 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
 ---
 # REPLACE/PROMETHES/GRAFANA with Kube-Prometheus-Stack
 # apiVersion: argoproj.io/v1alpha1
