@@ -1,4 +1,6 @@
 kube-prometheus-stack:
+  kube-state-metrics:
+
   alertmanager:
     enabled: true
     ingress:

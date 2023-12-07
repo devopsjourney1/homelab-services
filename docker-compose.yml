@@ -353,6 +353,25 @@ services:
       - 172.21.0.53
     logging:
           driver: json-file
+  # Jellyfin Media Server
+  # https://jellyfin.org/docs/general/installation/container/
+  jellyfin:
+    image: jellyfin/jellyfin
+    hostname: jellyfin
+    container_name: jellyfin
+    user: uid:gid
+    network_mode: 'host'
+    volumes:
+      - jellyfin-config:/config
+      #- /path/to/cache:/cache
+      - /volume1/share1/Media:/media:ro
+    restart: 'unless-stopped'
+    # Optional - alternative address used for autodiscovery
+    environment:
+      - JELLYFIN_PublishedServerUrl=http://jellyfin.devopsbrad.com
+    # Optional - may be necessary for docker healthcheck to pass if running in host network mode
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   # BootStrap Teleport Certs (only enable on first run)
   # bootstrap:
   #   image: public.ecr.aws/gravitational/teleport-lab:12
@@ -450,6 +469,12 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '$VOLUME_PATH/teleport/config'
+  jellyfin-config:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/jellyfin/config'
   tele-data:
     driver: local
     driver_opts:
