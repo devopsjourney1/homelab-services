@@ -359,7 +359,7 @@ services:
     image: jellyfin/jellyfin
     hostname: jellyfin
     container_name: jellyfin
-    user: uid:gid
+    #user: uid:gid
     network_mode: 'host'
     volumes:
       - jellyfin-config:/config
@@ -368,7 +368,7 @@ services:
     restart: 'unless-stopped'
     # Optional - alternative address used for autodiscovery
     environment:
-      - JELLYFIN_PublishedServerUrl=http://jellyfin.devopsbrad.com
+      - JELLYFIN_PublishedServerUrl=http://jellyfin.local
     # Optional - may be necessary for docker healthcheck to pass if running in host network mode
     extra_hosts:
       - "host.docker.internal:host-gateway"
