@@ -359,7 +359,7 @@ services:
     image: jellyfin/jellyfin
     hostname: jellyfin
     container_name: jellyfin
-    #user: uid:gid
+    user: uid:gid
     network_mode: 'host'
     volumes:
       - jellyfin-config:/config
