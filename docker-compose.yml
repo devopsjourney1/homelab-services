@@ -372,6 +372,17 @@ services:
     # Optional - may be necessary for docker healthcheck to pass if running in host network mode
     extra_hosts:
       - "host.docker.internal:host-gateway"
+  homeassistant:
+    container_name: homeassistant
+    hostname: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - homeassistant-config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
   # BootStrap Teleport Certs (only enable on first run)
   # bootstrap:
   #   image: public.ecr.aws/gravitational/teleport-lab:12
@@ -475,6 +486,12 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '$VOLUME_PATH/jellyfin/config'
+  homeassistant-config:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/homeassistant/config'
   tele-data:
     driver: local
     driver_opts:
