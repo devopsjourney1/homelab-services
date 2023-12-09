@@ -356,6 +356,15 @@ services:
   # Jellyfin Media Server
   # https://jellyfin.org/docs/general/installation/container/
   jellyfin:
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.jellyfin.loadbalancer.server.port: "8096"
+      traefik.http.routers.jellyfin-http.entrypoints: "web"
+      traefik.http.routers.jellyfin-http.rule: "Host(`jellyfin.devopsbrad.com`)"
+      traefik.http.routers.jellyfin-https.entrypoints: "websecure"
+      traefik.http.routers.jellyfin-https.rule: "Host(`jellyfin.devopsbrad.com`)"
+      traefik.http.routers.jellyfin-https.tls: "true"
+      traefik.http.routers.jellyfin-https.tls.certresolver: "letsEncrypt-production"
     image: jellyfin/jellyfin
     hostname: jellyfin
     container_name: jellyfin
@@ -372,6 +381,15 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
   homeassistant:
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.home.loadbalancer.server.port: "8123"
+      traefik.http.routers.home-http.entrypoints: "web"
+      traefik.http.routers.home-http.rule: "Host(`home.devopsbrad.com`)"
+      traefik.http.routers.home-https.entrypoints: "websecure"
+      traefik.http.routers.home-https.rule: "Host(`home.devopsbrad.com`)"
+      traefik.http.routers.home-https.tls: "true"
+      traefik.http.routers.home-https.tls.certresolver: "letsEncrypt-production"
     container_name: homeassistant
     hostname: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
