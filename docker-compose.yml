@@ -383,13 +383,13 @@ services:
   homeassistant:
     labels:
       traefik.enable: "true"
-      traefik.http.services.home.loadbalancer.server.port: "8123"
-      traefik.http.routers.home-http.entrypoints: "web"
-      traefik.http.routers.home-http.rule: "Host(`home.devopsbrad.com`)"
-      traefik.http.routers.home-https.entrypoints: "websecure"
-      traefik.http.routers.home-https.rule: "Host(`home.devopsbrad.com`)"
-      traefik.http.routers.home-https.tls: "true"
-      traefik.http.routers.home-https.tls.certresolver: "letsEncrypt-production"
+      traefik.http.services.homarr.loadbalancer.server.port: "8123"
+      traefik.http.routers.homarr-http.entrypoints: "web"
+      traefik.http.routers.homarr-http.rule: "Host(`home.devopsbrad.com`)"
+      traefik.http.routers.homarr-https.entrypoints: "websecure"
+      traefik.http.routers.homarr-https.rule: "Host(`home.devopsbrad.com`)"
+      traefik.http.routers.homarr-https.tls: "true"
+      traefik.http.routers.homarr-https.tls.certresolver: "letsEncrypt-production"
     container_name: homeassistant
     hostname: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
