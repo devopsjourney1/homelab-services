@@ -404,6 +404,15 @@ services:
       - "/dev/ttyUSB0:/dev/ttyUSB0"
 # Homearr dashboard
   homarr:
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.home.loadbalancer.server.port: "7575"
+      traefik.http.routers.home-http.entrypoints: "web"
+      traefik.http.routers.home-http.rule: "Host(`dashboard.devopsbrad.com`)"
+      traefik.http.routers.home-https.entrypoints: "websecure"
+      traefik.http.routers.home-https.rule: "Host(`dashboard.devopsbrad.com`)"
+      traefik.http.routers.home-https.tls: "true"
+      traefik.http.routers.home-https.tls.certresolver: "letsEncrypt-production"
     container_name: homarr
     image: ghcr.io/ajnart/homarr:latest
     restart: unless-stopped
@@ -412,8 +421,6 @@ services:
       - ./homarr/configs:/app/data/configs
       - ./homarr/icons:/app/public/icons
       - ./homarr/data:/data
-    ports:
-      - '7575:7575'
   # BootStrap Teleport Certs (only enable on first run)
   # bootstrap:
   #   image: public.ecr.aws/gravitational/teleport-lab:12
