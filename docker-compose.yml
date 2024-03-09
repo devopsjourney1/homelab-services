@@ -438,7 +438,7 @@ services:
     networks:
       - services
     volumes:
-      - /homepage/config:/app/config # Make sure your local config directory exists
+      - ./homepage/config:/app/config # Make sure your local config directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
   # BootStrap Teleport Certs (only enable on first run)
