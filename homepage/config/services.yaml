@@ -6,5 +6,36 @@
     - Jellyfin:
         icon: jellyfin.png
         href: http://jellyfin.local:8096/
-        description: Series management
+        description: Jellyfin Media Server
 
+- Management:
+    - Traefik:
+        icon: traefik.png
+        href: https://traefik.devopsbrad.com/dashboard
+        description: Proxy Services
+    - Portainer:
+        icon: portainer.png
+        href: https://portainer.devopsbrad.com/
+        description: Container Management
+    - ArgoCD:
+        icon: argocd.png
+        href: https://argocd.devopsbrad.com/
+        description: GitOps for Kubernetes
+    - Teleport:
+        icon: teleport.png
+        href: https://tele.devopsbrad.com/
+        description: SSH Session Manager
+
+- Observability:
+    - Kuma:
+        icon: kuma.png
+        href: https://kuma.devopsbrad.com/dashboard
+        description: Service Status Dashboard
+    - Portainer:
+        icon: grafana.png
+        href: https://grafana.devopsbrad.com/
+        description: Grafana Dashboard
+    - Teleport:
+        icon: prometheus.png
+        href: https://prom.devopsbrad.com/
+        description: Prometheus Metrics
