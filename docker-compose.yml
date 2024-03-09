@@ -406,13 +406,13 @@ services:
   homarr:
     labels:
       traefik.enable: "true"
-      traefik.http.services.home.loadbalancer.server.port: "7575"
-      traefik.http.routers.home-http.entrypoints: "web"
-      traefik.http.routers.home-http.rule: "Host(`dashboard.devopsbrad.com`)"
-      traefik.http.routers.home-https.entrypoints: "websecure"
-      traefik.http.routers.home-https.rule: "Host(`dashboard.devopsbrad.com`)"
-      traefik.http.routers.home-https.tls: "true"
-      traefik.http.routers.home-https.tls.certresolver: "letsEncrypt-production"
+      traefik.http.services.homarr.loadbalancer.server.port: "7575"
+      traefik.http.routers.homarr-http.entrypoints: "web"
+      traefik.http.routers.homarr-http.rule: "Host(`dashboard.devopsbrad.com`)"
+      traefik.http.routers.homarr-https.entrypoints: "websecure"
+      traefik.http.routers.homarr-https.rule: "Host(`dashboard.devopsbrad.com`)"
+      traefik.http.routers.homarr-https.tls: "true"
+      traefik.http.routers.homarr-https.tls.certresolver: "letsEncrypt-production"
     container_name: homarr
     image: ghcr.io/ajnart/homarr:latest
     restart: unless-stopped
