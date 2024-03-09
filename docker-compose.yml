@@ -403,26 +403,44 @@ services:
     devices:
       - "/dev/ttyUSB0:/dev/ttyUSB0"
 # Homearr dashboard
-  homarr:
+  # homarr:
+  #   labels:
+  #     traefik.enable: "true"
+  #     traefik.http.services.homarr.loadbalancer.server.port: "7575"
+  #     traefik.http.routers.homarr-http.entrypoints: "web"
+  #     traefik.http.routers.homarr-http.rule: "Host(`dashboard.devopsbrad.com`)"
+  #     traefik.http.routers.homarr-https.entrypoints: "websecure"
+  #     traefik.http.routers.homarr-https.rule: "Host(`dashboard.devopsbrad.com`)"
+  #     traefik.http.routers.homarr-https.tls: "true"
+  #     traefik.http.routers.homarr-https.tls.certresolver: "letsEncrypt-production"
+  #   container_name: homarr
+  #   image: ghcr.io/ajnart/homarr:latest
+  #   restart: unless-stopped
+  #   networks:
+  #     - services
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+  #     - ./homarr/configs:/app/data/configs
+  #     - ./homarr/icons:/app/public/icons
+  #     - ./homarr/data:/data
+  homepage:
     labels:
       traefik.enable: "true"
-      traefik.http.services.homarr.loadbalancer.server.port: "7575"
+      traefik.http.services.homarr.loadbalancer.server.port: "3000"
       traefik.http.routers.homarr-http.entrypoints: "web"
       traefik.http.routers.homarr-http.rule: "Host(`dashboard.devopsbrad.com`)"
       traefik.http.routers.homarr-https.entrypoints: "websecure"
       traefik.http.routers.homarr-https.rule: "Host(`dashboard.devopsbrad.com`)"
       traefik.http.routers.homarr-https.tls: "true"
       traefik.http.routers.homarr-https.tls.certresolver: "letsEncrypt-production"
-    container_name: homarr
-    image: ghcr.io/ajnart/homarr:latest
-    restart: unless-stopped
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
     networks:
       - services
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - ./homarr/configs:/app/data/configs
-      - ./homarr/icons:/app/public/icons
-      - ./homarr/data:/data
+      - /homepage/config:/app/config # Make sure your local config directory exists
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    restart: unless-stopped
   # BootStrap Teleport Certs (only enable on first run)
   # bootstrap:
   #   image: public.ecr.aws/gravitational/teleport-lab:12
