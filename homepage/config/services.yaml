@@ -29,6 +29,10 @@
         icon: argocd.png
         href: https://argocd.devopsbrad.com/
         description: GitOps for Kubernetes
+    - ArgoRollouts:
+        icon: argocd.png
+        href: https://argocd.devopsbrad.com/
+        description: GitOps for Kubernetes
     - Teleport:
         icon: teleport.png
         href: https://tele.devopsbrad.com/
@@ -36,18 +40,22 @@
 
 
 - Storage:
-    - Synology-DSM:
+    - DSM:
         icon: synology-dsm.svg
         href: https://argocd.devopsbrad.com/
-        description: DSM Management
-    - Synology-Drive:
-        icon: synology.svg
-        href: https://192-168-0-172.bradnas723.direct.quickconnect.to:5001/?launchApp=SYNO.SDS.Drive.Application
-        description: DSM Management
-    - Synology-Drive:
-        icon: synology.svg
-        href: https://192-168-0-172.bradnas723.direct.quickconnect.to:5001/?launchApp=SYNO.SDS.Drive.Application
-        description: DSM Management
+        description: Synology DSM
+    - Drive:
+        icon: drive.svg
+        href: https://192.168.0.172:5001/?launchApp=SYNO.SDS.Drive.Application
+        description: Synology Drive
+    - Photos:
+        icon: photo.svg
+        href: https://192.168.0.172:5001/webman/3rdparty/SurveillanceStation/
+        description: Synology Surveillance Station
+    - Surveillance:
+        icon: camera.svg
+        href: https://192.168.0.172:5001/webman/3rdparty/SurveillanceStation/
+        description: Synology Surveillance Station
 
 - Network:
     - Traefik:
@@ -60,7 +68,7 @@
         description: DNS Sinkhole
     - Twingate:
         icon: twingate.svg
-        href: bradhomelab.twingate.com
+        href: https://bradhomelab.twingate.com
         description: Zero-trust Access VPN
     - Tailscale:
         icon: tailscale.svg

@@ -4,15 +4,16 @@
 
 - Developer:
     - Github:
-        - abbr: Homelab Services
+        - abbr: GH
+          href: https://github.com/
+    - Homelab:
+        - abbr: Lab
           href: https://github.com/devopsjourney1/homelab-services
 
 - Social:
-    - Reddit:
-        - abbr: RE
-          href: https://reddit.com/
-
-- Entertainment:
     - YouTube:
         - abbr: YT
           href: https://youtube.com/
+    - Studio:
+        - abbr: Studio
+          href: https://studio.youtube.com/channel/UC4Snw5yrSDMXys31I18U3gg
