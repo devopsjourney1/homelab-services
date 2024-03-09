@@ -36,35 +36,35 @@ services:
           memory: 64M
     logging:
           driver: json-file
-  # Portainer Docker Management
-  # portainer:
-  #   image: portainer/portainer
-  #   hostname: portainer
-  #   restart: unless-stopped
-  #   environment:
-  #     - SESSION_TIMEOUT=315360000
-  #   labels:
-  #     traefik.enable: "true"
-  #     traefik.docker.network: "traefik"
-  #     traefik.http.services.portainer.loadbalancer.server.port: "9000"
-  #     traefik.http.routers.portainer-http.entrypoints: "web"
-  #     traefik.http.routers.portainer-http.rule: "Host(`portainer.devopsbrad.com`)"
-  #     traefik.http.routers.portainer-https.entrypoints: "websecure"
-  #     traefik.http.routers.portainer-https.rule: "Host(`portainer.devopsbrad.com`)"
-  #     traefik.http.routers.portainer-https.tls: "true"
-  #     traefik.http.routers.portainer-https.tls.certresolver: "letsEncrypt-production"
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #     - portainer_data:/data
-  #   networks:
-  #     - services
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 64M
-  #   logging:
-  #         driver: json-file
+   #Portainer Docker Management
+  portainer:
+    image: portainer/portainer
+    hostname: portainer
+    restart: unless-stopped
+    environment:
+      - SESSION_TIMEOUT=315360000
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "traefik"
+      traefik.http.services.portainer.loadbalancer.server.port: "9000"
+      traefik.http.routers.portainer-http.entrypoints: "web"
+      traefik.http.routers.portainer-http.rule: "Host(`portainer.devopsbrad.com`)"
+      traefik.http.routers.portainer-https.entrypoints: "websecure"
+      traefik.http.routers.portainer-https.rule: "Host(`portainer.devopsbrad.com`)"
+      traefik.http.routers.portainer-https.tls: "true"
+      traefik.http.routers.portainer-https.tls.certresolver: "letsEncrypt-production"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer_data:/data
+    networks:
+      - services
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+    logging:
+          driver: json-file
   # PiHole DNS Server
   pihole:
     image: pihole/pihole:latest
@@ -400,6 +400,8 @@ services:
     restart: unless-stopped
     privileged: true
     network_mode: host
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
   # BootStrap Teleport Certs (only enable on first run)
   # bootstrap:
   #   image: public.ecr.aws/gravitational/teleport-lab:12
