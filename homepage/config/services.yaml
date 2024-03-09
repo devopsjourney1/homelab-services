@@ -2,17 +2,25 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/services
 
-- Media:
+- Services:
     - Jellyfin:
         icon: jellyfin.png
         href: http://jellyfin.local:8096/
-        description: Jellyfin Media Server
+        description: Media Server
+    - Sunshine:
+        icon: sunshine.svg
+        href: https://localhost:47990/
+        description: Desktop Game Streaming
+    - Passbolt:
+        icon: passbolt.svg
+        href: https://pass.devopsbrad.com/
+        description: Password Manager
+    - HomeAssistant:
+        icon: home-assistant.svg
+        href: http://home.devopsbrad.com:8123/
+        description: Home automation
 
 - Management:
-    - Traefik:
-        icon: traefik.png
-        href: https://traefik.devopsbrad.com/dashboard
-        description: Proxy Services
     - Portainer:
         icon: portainer.png
         href: https://portainer.devopsbrad.com/
@@ -26,16 +34,53 @@
         href: https://tele.devopsbrad.com/
         description: SSH Session Manager
 
+
+- Storage:
+    - Synology-DSM:
+        icon: synology-dsm.svg
+        href: https://argocd.devopsbrad.com/
+        description: DSM Management
+    - Synology-Drive:
+        icon: synology.svg
+        href: https://192-168-0-172.bradnas723.direct.quickconnect.to:5001/?launchApp=SYNO.SDS.Drive.Application
+        description: DSM Management
+    - Synology-Drive:
+        icon: synology.svg
+        href: https://192-168-0-172.bradnas723.direct.quickconnect.to:5001/?launchApp=SYNO.SDS.Drive.Application
+        description: DSM Management
+
+- Network:
+    - Traefik:
+        icon: traefik.png
+        href: https://traefik.devopsbrad.com/dashboard
+        description: Proxy Services
+    - PIHole:
+        icon: pi-hole.svg
+        href: https://pihole.devopsbrad.com/admin/login.php
+        description: DNS Sinkhole
+    - Twingate:
+        icon: twingate.svg
+        href: bradhomelab.twingate.com
+        description: Zero-trust Access VPN
+    - Tailscale:
+        icon: tailscale.svg
+        href: https://login.tailscale.com/admin/machines
+        description: Zero-trust Access VPN
+    - Router:
+        icon: router.svg
+        href: https://router.devopsbrad.com/
+        description: WiFi Router
+
 - Observability:
     - Kuma:
-        icon: kuma.png
+        icon: uptime-kuma.svg
         href: https://kuma.devopsbrad.com/dashboard
         description: Service Status Dashboard
-    - Portainer:
+    - Grafana:
         icon: grafana.png
         href: https://grafana.devopsbrad.com/
         description: Grafana Dashboard
-    - Teleport:
+    - Prometheus:
         icon: prometheus.png
         href: https://prom.devopsbrad.com/
         description: Prometheus Metrics
