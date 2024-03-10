@@ -441,6 +441,33 @@ services:
       - ./homepage/config:/app/config # Make sure your local config directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
+  mealie:
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.mealie.loadbalancer.server.port: "9000"
+      traefik.http.routers.mealie-http.entrypoints: "web"
+      traefik.http.routers.mealie-http.rule: "Host(`mealie.devopsbrad.com`)"
+      traefik.http.routers.mealie-https.entrypoints: "websecure"
+      traefik.http.routers.mealie-https.rule: "Host(`mealie.devopsbrad.com`)"
+      traefik.http.routers.mealie-https.tls: "true"
+      traefik.http.routers.mealie-https.tls.certresolver: "letsEncrypt-production"
+    image: ghcr.io/mealie-recipes/mealie:v1.3.1 # 
+    container_name: mealie
+    deploy:
+      resources:
+        limits:
+          memory: 100M # 
+    volumes:
+      - mealie-data:/app/data/
+    environment:
+    # Set Backend ENV Variables Here
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - MAX_WORKERS=1
+      - WEB_CONCURRENCY=1
+      - BASE_URL=https://mealie.devopsbrad.com
+    restart: always
   # BootStrap Teleport Certs (only enable on first run)
   # bootstrap:
   #   image: public.ecr.aws/gravitational/teleport-lab:12
@@ -568,6 +595,12 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '$VOLUME_PATH/homearr'
+  mealie-storage:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/mealie'
 
 
 # Docker Networks
