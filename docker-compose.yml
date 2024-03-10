@@ -453,6 +453,8 @@ services:
       traefik.http.routers.mealie-https.tls.certresolver: "letsEncrypt-production"
     image: ghcr.io/mealie-recipes/mealie:v1.3.1 # 
     container_name: mealie
+    networks:
+      - services
     deploy:
       resources:
         limits:
