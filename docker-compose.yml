@@ -595,7 +595,7 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '$VOLUME_PATH/homearr'
-  mealie-storage:
+  mealie-data:
     driver: local
     driver_opts:
       type: 'none'
