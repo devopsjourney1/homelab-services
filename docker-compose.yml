@@ -458,7 +458,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 100M # 
+          memory: 1000M # 
     volumes:
       - mealie-data:/app/data/
     environment:
