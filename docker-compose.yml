@@ -497,7 +497,7 @@ services:
     environment:
       TZ: America/Los_Angeles
       CRON_MIN: '3,33'
-      TRUSTED_PROXY: 172.16.0.1/12 192.168.0.1/16 10.0.0./8
+      TRUSTED_PROXY: 172.16.0.1/12 192.168.0.1/16
   # BootStrap Teleport Certs (only enable on first run)
   # bootstrap:
   #   image: public.ecr.aws/gravitational/teleport-lab:12
