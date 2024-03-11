@@ -471,6 +471,33 @@ services:
       - WEB_CONCURRENCY=1
       - BASE_URL=https://mealie.devopsbrad.com
     restart: always
+  freshrss:
+    labels:
+      traefik.enable: "true"
+      traefik.http.services.mealie.loadbalancer.server.port: "80"
+      traefik.http.routers.mealie-http.entrypoints: "web"
+      traefik.http.routers.mealie-http.rule: "Host(`rss.devopsbrad.com`)"
+      traefik.http.routers.mealie-https.entrypoints: "websecure"
+      traefik.http.routers.mealie-https.rule: "Host(`rss.devopsbrad.com`)"
+      traefik.http.routers.mealie-https.tls: "true"
+      traefik.http.routers.mealie-https.tls.certresolver: "letsEncrypt-production"
+    image: freshrss/freshrss:latest
+    # Optional build section if you want to build the image locally:
+    networks:
+      - services
+    container_name: freshrss
+    hostname: freshrss
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: 10m
+    volumes:
+      - freshrss-data:/var/www/FreshRSS/data
+      - freshrss-extensions:/var/www/FreshRSS/extensions
+    environment:
+      TZ: America/Los_Angeles
+      CRON_MIN: '3,33'
+      TRUSTED_PROXY: 172.16.0.1/12 192.168.0.1/16 10.0.0./8
   # BootStrap Teleport Certs (only enable on first run)
   # bootstrap:
   #   image: public.ecr.aws/gravitational/teleport-lab:12
@@ -604,7 +631,18 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '$VOLUME_PATH/mealie'
-
+  freshrss-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/freshrss/data'
+  freshrss-extensions:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$VOLUME_PATH/freshrss/extensions'
 
 # Docker Networks
 networks:
