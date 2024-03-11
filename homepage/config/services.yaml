@@ -21,8 +21,12 @@
         description: Home automation
     - FreshRSS:
         icon: freshrss.svg
-        href: http://rss.devopsbrad.com
+        href: https://rss.devopsbrad.com
         description: RSS Feeds
+    - Mealie:
+        icon: mealie.svg
+        href: https://mealie.devopsbrad.com
+        description: Recipes/Meal Plans
 
 - Management:
     - Portainer:
