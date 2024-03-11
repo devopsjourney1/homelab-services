@@ -19,6 +19,10 @@
         icon: home-assistant.svg
         href: http://home.devopsbrad.com:8123/
         description: Home automation
+    - FreshRSS:
+        icon: freshrss.svg
+        href: http://rss.devopsbrad.com
+        description: RSS Feeds
 
 - Management:
     - Portainer:
